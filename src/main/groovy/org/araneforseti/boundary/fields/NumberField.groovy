@@ -11,7 +11,7 @@ class NumberField extends Field {
     List<BoundaryScenario> getCases() {
         List<BoundaryScenario> scenarios = super.getCases()
 
-        scenarios.add(new BoundaryScenario("${name} as string", "${name} must be a Number", "asdf"))
+        scenarios.add(new BoundaryScenario("${name} as string", "${name} must be a Number", "a"))
         scenarios.add(new BoundaryScenario("${name} as string containing number", "${name} must be a Number", "'12'"))
 
         return scenarios
