@@ -9,7 +9,7 @@ class BooleanField extends Field {
 
     @Override
     List<BoundaryScenario> getCases() {
-        List<BoundaryScenario> scenarios = []
+        List<BoundaryScenario> scenarios = super.getCases()
 
         scenarios.add(new BoundaryScenario("${name} as a non-boolean string", "${name} must be boolean", "a"))
         scenarios.add(new BoundaryScenario("${name} as a number", "${name} must be boolean", 2))
