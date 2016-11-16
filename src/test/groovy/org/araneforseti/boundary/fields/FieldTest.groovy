@@ -2,18 +2,16 @@ package org.araneforseti.boundary.fields
 
 import org.junit.Test
 
-import static junit.framework.Assert.assertEquals
+import static org.araneforseti.boundary.fields.TestUtil.scenarios_contains_value
 
 class FieldTest {
     @Test
-    public void required_field_should_have_case() {
-        Field testField = new Field("testField", "Rar", true) { }
-        assertEquals(1, testField.getCases().size())
+    public void required_fields_cannot_be_null() {
+        assert scenarios_contains_value(null, new Field("testField", "foo", true) { })
     }
 
     @Test
-    public void nonrequired_field_should_not_have_case() {
-        Field testField = new Field("testField", "Rar", false) { }
-        assertEquals(0, testField.getCases().size())
+    public void nonrequired_field_can_be_null() {
+        assert !scenarios_contains_value(null, new Field("testField", "foo", false) { })
     }
 }

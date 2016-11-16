@@ -12,7 +12,7 @@ class BooleanField extends Field {
         List<BoundaryScenario> scenarios = []
 
         scenarios.add(new BoundaryScenario("${name} as a non-boolean string", "${name} must be boolean", "a"))
-        scenarios.add(new BoundaryScenario("${name} as a number", "${name} must be boolean", 0))
+        scenarios.add(new BoundaryScenario("${name} as a number", "${name} must be boolean", 2))
 
         return scenarios
     }
