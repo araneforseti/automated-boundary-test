@@ -13,7 +13,7 @@ class IdField extends Field {
 
     @Override
     List<BoundaryScenario> getCases() {
-        List<BoundaryScenario> scenarios = new ArrayList<>()
+        List<BoundaryScenario> scenarios = super.getCases()
 
         scenarios.add(idScenario("hex number which does not exist", "asdf123"))
         scenarios.add(idScenario("invalid hex number", "zvwev"))
