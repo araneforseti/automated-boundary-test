@@ -8,11 +8,10 @@ class EmailField extends Field {
     }
 
     List<BoundaryScenario> getCases() {
-        List<BoundaryScenario> scenarios = []
+        List<BoundaryScenario> scenarios = super.getCases()
 
         if (isRequired) {
             scenarios.add(new BoundaryScenario("${name} as empty string", "${name} is a required field", ""))
-            scenarios.add(new BoundaryScenario("${name} as null", "${name} is a required field", null))
         }
 
         scenarios.add(new BoundaryScenario("$name missing '@'", "$name email not a well-formed email address", "testtest.com"))
