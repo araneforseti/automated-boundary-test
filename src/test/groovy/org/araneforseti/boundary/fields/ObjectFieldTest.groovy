@@ -4,34 +4,28 @@ import org.junit.Test
 
 import static org.araneforseti.boundary.fields.TestUtil.scenarios_contains_value
 
-class ArrayFieldTest {
+class ObjectFieldTest {
     @Test
     public void required_field_cannot_be_null() {
-        ArrayField arrayField = new ArrayField("testField", true)
-        scenarios_contains_value(null, arrayField)
+        ObjectField objectField = new ObjectField("testField", true)
+        scenarios_contains_value(null, objectField)
     }
 
     @Test
     public void optional_field_can_be_null() {
-        ArrayField arrayField = new ArrayField("testField", false)
-        !scenarios_contains_value(null, arrayField)
+        ObjectField objectField = new ObjectField("testField", false)
+        !scenarios_contains_value(null, objectField)
     }
 
     @Test
     public void gives_cases_for_fields() {
-        ArrayField arrayField = new ArrayField("testField", false)
+        ObjectField objectField = new ObjectField("testField", false)
                 .withField(new BooleanField("bool", true))
                 .withField(new BooleanField("bool2", false))
-        assert arrayField.getCases()[0].value[0]["bool"] == null
-        assert arrayField.getCases()[1].value[0]["bool"] == "a"
-        assert arrayField.getCases()[2].value[0]["bool"] == 2
-        assert arrayField.getCases()[3].value[0]["bool2"] == "a"
-        assert arrayField.getCases()[4].value[0]["bool2"] == 2
-
-        assert arrayField.getCases()[0].value[0]["bool2"] == true
-        assert arrayField.getCases()[1].value[0]["bool2"] == true
-        assert arrayField.getCases()[2].value[0]["bool2"] == true
-        assert arrayField.getCases()[3].value[0]["bool"] == true
-        assert arrayField.getCases()[4].value[0]["bool"] == true
+        scenarios_contains_value([bool: null, bool2: true], objectField)
+        scenarios_contains_value([bool: "a", bool2: true], objectField)
+        scenarios_contains_value([bool: 2, bool2: true], objectField)
+        scenarios_contains_value([bool2: "a", bool: true], objectField)
+        scenarios_contains_value([bool2: 2, bool: true], objectField)
     }
 }
