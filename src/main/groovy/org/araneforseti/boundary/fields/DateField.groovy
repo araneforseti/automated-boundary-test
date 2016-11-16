@@ -18,7 +18,6 @@ class DateField extends Field {
 
         if (isRequired) {
             scenarios.add(new BoundaryScenario("${name} as empty string", "${name} is a required field", ""))
-            scenarios.add(new BoundaryScenario("${name} as null", "${name} is a required field", null))
         }
 
         scenarios.add(new BoundaryScenario("${name} as a number", "${name} must be a valid Datetime", 1))
