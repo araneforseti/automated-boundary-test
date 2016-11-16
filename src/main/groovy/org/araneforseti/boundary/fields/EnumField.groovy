@@ -23,7 +23,7 @@ class EnumField extends Field {
             String numValue = value + "12"
             scenarios.add(enumScenario(name, numValue))
 
-            String typoValue = value.substring(0, value.length()-2)
+            String typoValue = value.substring(0, value.length()-1)
             scenarios.add(enumScenario(name, typoValue))
         }
 
