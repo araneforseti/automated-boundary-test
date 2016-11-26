@@ -8,6 +8,10 @@ class Definition {
     List<Field> fields = []
     BoundaryTester tester
 
+    Definition() {
+        tester = new BoundaryTester()
+    }
+
     Definition(BoundaryTester tester) {
         this.tester = tester
     }
@@ -51,7 +55,7 @@ class Definition {
             if(field.isRequired) {
                 scenarios.add(
                         new BoundaryScenario("${field.name} missing ",
-                                "${field.name} is a required field",
+                                "${field.name} $requiredField",
                                 withoutField(field.name))
                 )
             }
