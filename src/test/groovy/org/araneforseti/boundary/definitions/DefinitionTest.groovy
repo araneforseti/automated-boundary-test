@@ -1,10 +1,9 @@
 package org.araneforseti.boundary.definitions
 
 import org.araneforseti.boundary.fields.BooleanField
-import org.araneforseti.boundary.fields.ObjectField
 import org.junit.Test
 
-import static org.araneforseti.boundary.fields.TestUtil.scenarios_contains_value
+import static org.araneforseti.boundary.TestUtil.scenarios_contains_value
 
 class DefinitionTest {
     @Test

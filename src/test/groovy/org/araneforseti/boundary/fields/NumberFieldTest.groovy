@@ -2,7 +2,7 @@ package org.araneforseti.boundary.fields
 
 import org.junit.Test
 
-import static org.araneforseti.boundary.fields.TestUtil.scenarios_contains_value
+import static org.araneforseti.boundary.TestUtil.scenarios_contains_value
 
 class NumberFieldTest {
     NumberField requiredNumber = new NumberField("testField", true)

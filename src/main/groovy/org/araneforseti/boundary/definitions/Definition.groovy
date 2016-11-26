@@ -1,10 +1,16 @@
 package org.araneforseti.boundary.definitions
 
+import org.araneforseti.boundary.BoundaryTester
 import org.araneforseti.boundary.fields.Field
 import org.araneforseti.boundary.scenarios.BoundaryScenario
 
 class Definition {
     List<Field> fields = []
+    BoundaryTester tester
+
+    Definition(BoundaryTester tester) {
+        this.tester = tester
+    }
 
     Definition withField(Field field) {
         fields.add(field)
@@ -39,6 +45,7 @@ class Definition {
 
     List<BoundaryScenario> getCases() {
         List<BoundaryScenario> scenarios = []
+        String requiredField = tester.requiredMessage
 
         fields.each { field ->
             if(field.isRequired) {
