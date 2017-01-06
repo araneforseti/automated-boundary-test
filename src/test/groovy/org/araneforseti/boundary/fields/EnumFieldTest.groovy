@@ -9,8 +9,8 @@ class EnumFieldTest {
     EnumField optionalField = new EnumField("optionalField", ["A", "B"], true)
 
     private boolean test_both(value) {
-        scenarios_contains_value(value, requiredField)
-        scenarios_contains_value(value, optionalField)
+        assert scenarios_contains_value(value, requiredField)
+        assert scenarios_contains_value(value, optionalField)
     }
 
     @Test

@@ -11,10 +11,10 @@ class DefinitionTest {
         Definition definition = new Definition()
                 .withField(new BooleanField("bool", true))
                 .withField(new BooleanField("bool2", false))
-        scenarios_contains_value([bool: null, bool2: true], definition)
-        scenarios_contains_value([bool: "a", bool2: true], definition)
-        scenarios_contains_value([bool: 2, bool2: true], definition)
-        scenarios_contains_value([bool2: "a", bool: true], definition)
-        scenarios_contains_value([bool2: 2, bool: true], definition)
+        assert scenarios_contains_value([bool: null, bool2: true], definition)
+        assert scenarios_contains_value([bool: "a", bool2: true], definition)
+        assert scenarios_contains_value([bool: 2, bool2: true], definition)
+        assert scenarios_contains_value([bool2: "a", bool: true], definition)
+        assert scenarios_contains_value([bool2: 2, bool: true], definition)
     }
 }
