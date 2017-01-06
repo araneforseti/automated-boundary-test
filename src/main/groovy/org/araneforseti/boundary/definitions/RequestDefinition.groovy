@@ -25,35 +25,53 @@ class RequestDefinition {
         this
     }
 
-    List<RequestScenario> getPossibleRequests() {
+    List<RequestScenario> createRequests() {
+        if(pathDefinition == null) {
+            throw new Exception("Path definition required")
+        }
+        requestsFromPathScenarios() + requestsFromQueryScenarios() + requestsFromBodyScenarios()
+    }
+
+    List<RequestScenario> requestsFromPathScenarios() {
         List<RequestScenario> scenarios = []
         pathDefinition.getScenarios().each { scenario ->
             scenarios << new RequestScenario(
-                    name: scenario.name,
-                    path: scenario.value,
-                    queryParameters: queryDefinition.getCorrectValue(),
-                    bodyParameters: bodyDefinition.getCorrectValue(),
-                    expectedResponse: responseFor(scenario))
+                    scenario.name,
+                    scenario.value,
+                    queryDefinition?.getCorrectValue() ?: [:],
+                    bodyDefinition?.getCorrectValue() ?: [:],
+                    responseFor(scenario))
         }
+        scenarios
+    }
 
-        queryDefinition.getCases().each { scenario ->
-            scenarios << new RequestScenario(
-                    name: scenario.name,
-                    path: pathDefinition.correctPath,
-                    queryParameters: scenario.value,
-                    bodyParameters: bodyDefinition.getCorrectValue(),
-                    expectedResponse: responseFor(scenario))
+    List<RequestScenario> requestsFromQueryScenarios() {
+        List<RequestScenario> scenarios = []
+        if(queryDefinition) {
+            queryDefinition.getCases().each { scenario ->
+                scenarios << new RequestScenario(
+                        scenario.name,
+                        pathDefinition.correctPath,
+                        scenario.value,
+                        bodyDefinition?.getCorrectValue(),
+                        responseFor(scenario))
+            }
         }
+        scenarios
+    }
 
-        bodyDefinition.getCases().each { scenario ->
-            scenarios << new RequestScenario(
-                    name: scenario.name,
-                    path: pathDefinition.correctPath,
-                    queryParameters: queryDefinition.getCorrectValue(),
-                    bodyParameters: scenario.value,
-                    expectedResponse: responseFor(scenario))
+    List<RequestScenario> requestsFromBodyScenarios() {
+        List<RequestScenario> scenarios = []
+        if(bodyDefinition) {
+            bodyDefinition.getCases().each { scenario ->
+                scenarios << new RequestScenario(
+                        scenario.name,
+                        pathDefinition.correctPath,
+                        queryDefinition?.getCorrectValue(),
+                        scenario.value,
+                        responseFor(scenario))
+            }
         }
-
         scenarios
     }
 
