@@ -67,4 +67,12 @@ class Definition {
 
         return scenarios
     }
+
+    Map getCorrectValue() {
+        Map correctValues = [:]
+        fields.each { field ->
+            correctValues.put(field.name, field.correctValue)
+        }
+        correctValues
+    }
 }

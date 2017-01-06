@@ -24,7 +24,7 @@ class PathDefinition {
             pathParameter.scenarios.collect { scenario ->
                 new BoundaryScenario(
                         scenario.name,
-                        scenario.expectedMessage,
+                        scenario.expectedResponse,
                         createPathForScenario(pathParameter, scenario.value))
             }
         }
