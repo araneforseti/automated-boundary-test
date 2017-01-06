@@ -1,5 +1,10 @@
 package org.araneforseti.boundary.scenarios
 
+import groovy.transform.EqualsAndHashCode
+import groovy.transform.ToString
+
+@EqualsAndHashCode
+@ToString
 class BoundaryScenario {
     String expectedMessage
     def value = null
