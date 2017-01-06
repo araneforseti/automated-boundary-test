@@ -29,6 +29,7 @@ class RequestDefinition {
         List<RequestScenario> scenarios = []
         pathDefinition.getScenarios().each { scenario ->
             scenarios << new RequestScenario(
+                    name: scenario.name,
                     path: scenario.value,
                     queryParameters: queryDefinition.getCorrectValue(),
                     bodyParameters: bodyDefinition.getCorrectValue(),
@@ -37,6 +38,7 @@ class RequestDefinition {
 
         queryDefinition.getCases().each { scenario ->
             scenarios << new RequestScenario(
+                    name: scenario.name,
                     path: pathDefinition.correctPath,
                     queryParameters: scenario.value,
                     bodyParameters: bodyDefinition.getCorrectValue(),
@@ -45,6 +47,7 @@ class RequestDefinition {
 
         bodyDefinition.getCases().each { scenario ->
             scenarios << new RequestScenario(
+                    name: scenario.name,
                     path: pathDefinition.correctPath,
                     queryParameters: queryDefinition.getCorrectValue(),
                     bodyParameters: scenario.value,

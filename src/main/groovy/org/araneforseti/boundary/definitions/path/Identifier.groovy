@@ -15,7 +15,7 @@ class Identifier implements PathParameter{
     }
 
     Identifier withScenario(String value, Response expectedResponse) {
-        scenarios << new BoundaryScenario(this.name, expectedResponse, value)
+        scenarios << new BoundaryScenario("$name as $value", expectedResponse, value)
         this
     }
 

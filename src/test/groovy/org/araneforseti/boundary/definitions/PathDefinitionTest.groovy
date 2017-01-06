@@ -68,8 +68,8 @@ class PathDefinitionTest extends Specification {
                 .withParameter(carIdWithScenarios)
 
         expect:
-        pathDefinition.getScenarios() == [new BoundaryScenario(carIdWithScenarios.getName(), response1, "/cars/abc"),
-                                          new BoundaryScenario(carIdWithScenarios.getName(), response2, "/cars/!@#!@#")]
+        pathDefinition.getScenarios() == [new BoundaryScenario("carId as abc", response1, "/cars/abc"),
+                                          new BoundaryScenario("carId as !@#!@#", response2, "/cars/!@#!@#")]
     }
 
     void 'should build a path definition with multiple resources and identifiers'() {
@@ -93,8 +93,8 @@ class PathDefinitionTest extends Specification {
                 .withParameter(this.wheelIdWithScenarios)
 
         expect:
-        pathDefinition.getScenarios() == [new BoundaryScenario("carId", response1, "/cars/abc/wheels/FrontRight"),
-                                          new BoundaryScenario("carId", response2, "/cars/!@#!@#/wheels/FrontRight"),
-                                          new BoundaryScenario("wheelId", response3, "/cars/1000043/wheels/1234")]
+        pathDefinition.getScenarios() == [new BoundaryScenario("carId as abc", response1, "/cars/abc/wheels/FrontRight"),
+                                          new BoundaryScenario("carId as !@#!@#", response2, "/cars/!@#!@#/wheels/FrontRight"),
+                                          new BoundaryScenario("wheelId as 1234", response3, "/cars/1000043/wheels/1234")]
     }
 }

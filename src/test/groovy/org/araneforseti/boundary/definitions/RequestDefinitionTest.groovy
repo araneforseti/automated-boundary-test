@@ -43,6 +43,7 @@ class RequestDefinitionTest extends Specification {
 
         then:
         requestScenarios.size() == 3
+        requestScenarios[0].name == "carId as incorrect"
         requestScenarios[0].path == "/cars/incorrect"
         requestScenarios[0].queryParameters == [queryStringField: "correct value 1"]
         requestScenarios[0].bodyParameters == [bodyStringField: "correct value 2"]
@@ -55,6 +56,7 @@ class RequestDefinitionTest extends Specification {
 
         then:
         requestScenarios.size() == 3
+        requestScenarios[1].name == "queryStringField as a number"
         requestScenarios[1].path == "/cars/123"
         requestScenarios[1].queryParameters == [queryStringField: 1]
         requestScenarios[1].bodyParameters == [bodyStringField: "correct value 2"]
@@ -67,6 +69,7 @@ class RequestDefinitionTest extends Specification {
 
         then:
         requestScenarios.size() == 3
+        requestScenarios[2].name == "bodyStringField as a number"
         requestScenarios[2].path == "/cars/123"
         requestScenarios[2].queryParameters == [queryStringField: "correct value 1"]
         requestScenarios[2].bodyParameters == [bodyStringField: 1]
