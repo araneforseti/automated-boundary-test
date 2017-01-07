@@ -3,12 +3,12 @@ package org.araneforseti.boundary.mountebank
 import groovy.json.JsonOutput
 import org.araneforseti.boundary.ApiHelper
 import org.araneforseti.boundary.definitions.Definition
+import org.araneforseti.boundary.definitions.ExpectedResponse
 import org.araneforseti.boundary.definitions.RequestDefinition
-import org.araneforseti.boundary.definitions.Response
 import org.araneforseti.boundary.definitions.path.Identifier
 import org.araneforseti.boundary.definitions.path.PathDefinition
-import org.araneforseti.boundary.definitions.path.Resource
 import org.araneforseti.boundary.fields.BooleanField
+import org.araneforseti.boundary.fields.EnumField
 import org.araneforseti.boundary.fields.NumberField
 import org.araneforseti.boundary.fields.StringField
 import org.mbtest.javabank.Client
@@ -16,6 +16,8 @@ import org.mbtest.javabank.fluent.ImposterBuilder
 import spock.lang.Shared
 import spock.lang.Specification
 import spock.lang.Unroll
+
+import static org.araneforseti.boundary.ApiHelper.post
 
 // This file intentionally includes failing tests
 
@@ -34,10 +36,12 @@ class TestBoundaryTest extends Specification{
 
     @Shared RequestDefinition requestDefinition = new RequestDefinition()
             .withPathDefinition(new PathDefinition()
-                .withParameter(new Resource("parent"))
+                .withResource("parent")
                 .withParameter(new Identifier("parentId", "123")
-                    .withScenario("abc", new Response([code: 10043, message: "invalid id"], 404)))
-                .withParameter(new Resource("child")))
+                    .withScenario("abc", new ExpectedResponse([code: 10043, message: "invalid id"], 404)))
+                .withResource("child"))
+            .withQueryDefinition(new Definition()
+                .withField(new EnumField("enumField", ["value1", "value2"], true)))
             .withBodyDefinition(new Definition()
                 .withField(new StringField("stringField", "string value", true))
                 .withField(new BooleanField("booleanField", true))
@@ -49,7 +53,7 @@ class TestBoundaryTest extends Specification{
         setupPassingImposter(expectedResponse)
 
         when:
-        Map response = ApiHelper.post(path, body, query)
+        Map response = post(path, body, query)
 
         then:
         response.statusCode == expectedResponse.statusCode
@@ -70,7 +74,7 @@ class TestBoundaryTest extends Specification{
         setupFailingImposter()
 
         when:
-        Map response = ApiHelper.post(path, body, query)
+        Map response = post(path, body, query)
 
         then:
         response.statusCode == expectedResponse.statusCode
@@ -86,7 +90,7 @@ class TestBoundaryTest extends Specification{
     }
 
 
-    def setupPassingImposter(Response expectedResponse) {
+    def setupPassingImposter(ExpectedResponse expectedResponse) {
         mountebank.createImposter(new ImposterBuilder()
             .onPort(8080)
                 .stub()

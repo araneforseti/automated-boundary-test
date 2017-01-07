@@ -9,9 +9,9 @@ import spock.lang.Specification
 import static org.araneforseti.boundary.TestUtil.responseFor
 
 class PathDefinitionTest extends Specification {
-    private Response response1
-    private Response response2
-    private Response response3
+    private ExpectedResponse response1
+    private ExpectedResponse response2
+    private ExpectedResponse response3
     private Identifier carIdWithScenarios
     private Identifier wheelIdWithScenarios
     private Resource carResource

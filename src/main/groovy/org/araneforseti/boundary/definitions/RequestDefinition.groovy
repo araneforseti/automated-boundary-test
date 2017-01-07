@@ -75,11 +75,11 @@ class RequestDefinition {
         scenarios
     }
 
-    private static Response responseFor(BoundaryScenario scenario) {
+    private static ExpectedResponse responseFor(BoundaryScenario scenario) {
         scenario.expectedResponse ?: defaultResponse(scenario)
     }
 
-    private static Response defaultResponse(BoundaryScenario scenario) {
-        new Response([message: scenario.expectedMessage])
+    private static ExpectedResponse defaultResponse(BoundaryScenario scenario) {
+        new ExpectedResponse([message: scenario.expectedMessage])
     }
 }

@@ -1,6 +1,6 @@
 package org.araneforseti.boundary.definitions.path
 
-import org.araneforseti.boundary.definitions.Response
+import org.araneforseti.boundary.definitions.ExpectedResponse
 import org.araneforseti.boundary.scenarios.BoundaryScenario
 
 class Identifier implements PathParameter{
@@ -14,7 +14,7 @@ class Identifier implements PathParameter{
         this.correctValue = correctValue
     }
 
-    Identifier withScenario(String value, Response expectedResponse) {
+    Identifier withScenario(String value, ExpectedResponse expectedResponse) {
         scenarios << new BoundaryScenario("$name as $value", expectedResponse, value)
         this
     }

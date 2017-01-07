@@ -6,6 +6,11 @@ class PathDefinition {
 
     private List<PathParameter> pathParameters = []
 
+    PathDefinition withResource(String resource) {
+        pathParameters << new Resource(resource)
+        this
+    }
+
     PathDefinition withParameter(PathParameter pathParameter) {
         pathParameters << pathParameter
         this

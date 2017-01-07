@@ -14,9 +14,9 @@ class RequestDefinitionTest extends Specification {
     private PathDefinition pathDefinition
     private Definition queryDefinition
     private Definition bodyDefinition
-    private Response response1
-    private Response response2
-    private Response response3
+    private ExpectedResponse response1
+    private ExpectedResponse response2
+    private ExpectedResponse response3
     private RequestDefinition requestDefinition
 
     void setup() {
