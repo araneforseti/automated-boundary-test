@@ -10,34 +10,34 @@ class EmailFieldTest {
 
     @Test
     public void required_field_cannot_be_empty_string() {
-        scenarios_contains_value("", requiredField)
+        assert scenarios_contains_value("", requiredField)
     }
 
     @Test
     public void optional_field_can_be_empty_string() {
-        !scenarios_contains_value("", optionalField)
+        assert !scenarios_contains_value("", optionalField)
     }
 
     @Test
     public void required_field_cannot_be_null() {
-        scenarios_contains_value(null, requiredField)
+        assert scenarios_contains_value(null, requiredField)
     }
 
     @Test
     public void optional_field_can_be_null() {
-        !scenarios_contains_value(null, optionalField)
+        assert !scenarios_contains_value(null, optionalField)
     }
 
     @Test
     public void field_must_contain_at() {
-        scenarios_contains_value("testtest.com", requiredField)
-        scenarios_contains_value("testtest.com", optionalField)
+        assert scenarios_contains_value("testtest.com", requiredField)
+        assert scenarios_contains_value("testtest.com", optionalField)
     }
 
     @Test
     public void field_cannot_be_number() {
-        scenarios_contains_value(123, requiredField)
-        scenarios_contains_value(123, optionalField)
+        assert scenarios_contains_value(123, requiredField)
+        assert scenarios_contains_value(123, optionalField)
     }
 
     @Test

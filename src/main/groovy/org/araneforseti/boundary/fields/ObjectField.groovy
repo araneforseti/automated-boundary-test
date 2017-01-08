@@ -18,6 +18,10 @@ class ObjectField extends Field {
     List<BoundaryScenario> getCases() {
         List<BoundaryScenario> scenarios = []
 
+        if(isRequired) {
+            scenarios << new BoundaryScenario("$name as null", "$name is a required field", null)
+        }
+
         fieldList.each{ field ->
             if(field.isRequired) {
                 scenarios.add(missingFieldScenario(field))

@@ -14,7 +14,7 @@ class ArrayFieldTest {
     @Test
     public void optional_field_can_be_null() {
         ArrayField arrayField = new ArrayField("testField", false)
-        !scenarios_contains_value(null, arrayField)
+        assert !scenarios_contains_value(null, arrayField)
     }
 
     @Test

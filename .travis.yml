@@ -9,3 +9,6 @@ cache:
 
 git:
   depth: 3
+
+jdk:
+  - oraclejdk8

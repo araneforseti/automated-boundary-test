@@ -10,32 +10,32 @@ class DateFieldTest {
 
     @Test
     public void required_field_cannot_be_empty_string() {
-        scenarios_contains_value("", requiredField)
+        assert scenarios_contains_value("", requiredField)
     }
 
     @Test
     public void optional_field_can_be_empty_string() {
-        !scenarios_contains_value("", optionalField)
+        assert !scenarios_contains_value("", optionalField)
     }
 
     @Test
     public void cannot_be_number() {
-        test_both(1)
+        assert test_both(1)
     }
 
     @Test
     public void cannot_be_boolean_true() {
-        test_both(true)
+        assert test_both(true)
     }
 
     @Test
     public void cannot_be_boolean_false() {
-        test_both(false)
+        assert test_both(false)
     }
 
     @Test
     public void cannot_be_regular_string() {
-        test_both("asdf")
+        assert test_both("asdf")
     }
 
     public boolean test_both(value) {

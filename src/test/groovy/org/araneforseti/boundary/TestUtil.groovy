@@ -1,6 +1,7 @@
 package org.araneforseti.boundary
 
 import org.araneforseti.boundary.definitions.Definition
+import org.araneforseti.boundary.definitions.ExpectedResponse
 import org.araneforseti.boundary.fields.Field
 
 class TestUtil {
@@ -32,5 +33,11 @@ class TestUtil {
             }
         }
         return found
+    }
+
+    static final String responseKey = "message"
+
+    static ExpectedResponse responseFor(String message, int statusCode = 400) {
+        new ExpectedResponse([(responseKey): message], statusCode)
     }
 }
