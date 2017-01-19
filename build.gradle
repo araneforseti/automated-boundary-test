@@ -1,4 +1,4 @@
-group 'araneforseti'
+group 'org.araneforseti.boundary'
 version '1.0.0'
 
 apply plugin: 'groovy'
