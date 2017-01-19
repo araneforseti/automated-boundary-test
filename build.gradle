@@ -22,7 +22,7 @@ dependencies {
 jar {
     manifest {
         attributes 'Implementation-Title': 'Automated Boundary Testing',
-                'Implementation-Version': 0.1
+                'Implementation-Version': 0.2
     }
 }
 
