@@ -27,3 +27,8 @@ jar {
                 'Implementation-Version': 1.0
     }
 }
+
+//the tests in this package require mountebank to be running on localhost
+test {
+    exclude 'org/araneforseti/boundary/mountebank/**'
+}
