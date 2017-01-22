@@ -50,4 +50,14 @@ class TestUtil {
     static ExpectedResponse responseFor(String message, int statusCode = 400) {
         new ExpectedResponse([(responseKey): message], statusCode)
     }
+
+    static boolean scenarios_use_messageName_instead_of_name(String messageName, String name, Field field) {
+        boolean found = false
+        field.getCases().each { scenario ->
+            if (scenario.expectedMessage.contains(messageName) && !scenario.expectedMessage.contains(name)) {
+                found = true
+            }
+        }
+        return found
+    }
 }

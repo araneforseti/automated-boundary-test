@@ -1,12 +1,13 @@
 package org.araneforseti.boundary.fields
 
 import org.araneforseti.boundary.scenarios.BoundaryScenario
+import org.araneforseti.boundary.util.MessageConfiguration
 
 class ObjectField extends Field {
     List<Field> fieldList = []
 
-    ObjectField(String name, boolean required, String messageName=null, String requiredMessage=null) {
-        super(name, "N/A", required, messageName, requiredMessage)
+    ObjectField(String name, boolean required, String messageName=null, MessageConfiguration messageConfiguration=null) {
+        super(name, "N/A", required, messageName, messageConfiguration)
     }
 
     ObjectField withField(Field newField) {
@@ -19,7 +20,7 @@ class ObjectField extends Field {
         List<BoundaryScenario> scenarios = []
 
         if(isRequired) {
-            scenarios << new BoundaryScenario("$name as null", requiredMessage, null)
+            scenarios << new BoundaryScenario("$name as null", messageConfiguration.requiredMessage, null)
         }
 
         fieldList.each{ field ->
@@ -58,5 +59,10 @@ class ObjectField extends Field {
             }
         }
         return myValue
+    }
+
+    @Override
+    String fieldType() {
+        return "object"
     }
 }

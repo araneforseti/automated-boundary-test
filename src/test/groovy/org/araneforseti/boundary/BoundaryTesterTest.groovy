@@ -12,7 +12,12 @@ class BoundaryTesterTest {
         String message = "is the new message!!!!"
         BoundaryTester tester = new BoundaryTester()
         tester.setRequiredMessage(message)
-        Definition definition = new Definition(tester).withField(new Field("testField", "asdf", true) {})
+        Definition definition = new Definition(tester).withField(new Field("testField", "asdf", true) {
+            @Override
+            String fieldType() {
+                return "field"
+            }
+        })
         assert scenario_messages_contains(message, definition)
     }
 }

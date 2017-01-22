@@ -47,4 +47,9 @@ class ArrayField extends Field {
         values.add(firstValue)
         return values
     }
+
+    @Override
+    String fieldType() {
+        return "Array"
+    }
 }

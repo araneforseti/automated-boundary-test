@@ -1,19 +1,21 @@
 package org.araneforseti.boundary.fields
 
-import org.araneforseti.boundary.util.DefaultMessages
+import org.araneforseti.boundary.util.DefaultMessage
+
 import org.junit.Test
 
+import static org.araneforseti.boundary.TestUtil.scenario_messages_contains
 import static org.araneforseti.boundary.TestUtil.scenarios_contains_value
 
 class FieldTest {
     @Test
     void required_fields_cannot_be_null() {
-        assert scenarios_contains_value(null, new Field("testField", "foo", true) { })
+        assert scenarios_contains_value(null, new TestField("testField", "foo", true))
     }
 
     @Test
     void nonrequired_field_can_be_null() {
-        assert !scenarios_contains_value(null, new Field("testField", "foo", false) { })
+        assert !scenarios_contains_value(null, new TestField("testField", "foo", false))
     }
 
     @Test
@@ -26,12 +28,11 @@ class FieldTest {
         assert (new TestField("testField", "foo", false)).messageName == "testField"
     }
 
-
     @Test
     void field_required_message_defaults_to_class() {
         String fieldName = "testField"
-        String requiredMessage = DefaultMessages.requiredMessageWith(fieldName)
-        assert (new TestField(fieldName, "foo", false)).requiredMessage == requiredMessage
+        String requiredMessage = DefaultMessage.defaultRequired(fieldName).build()
+        assert scenario_messages_contains(requiredMessage, new TestField(fieldName, "foo", true))
     }
 
     class TestField extends Field {
@@ -41,6 +42,11 @@ class FieldTest {
 
         TestField(String name, Object correctValue, boolean required) {
             super(name, correctValue, required)
+        }
+
+        @Override
+        String fieldType() {
+            return "TestField"
         }
     }
 }

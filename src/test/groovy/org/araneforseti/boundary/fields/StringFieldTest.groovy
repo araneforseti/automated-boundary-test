@@ -1,15 +1,18 @@
 package org.araneforseti.boundary.fields
 
+import org.araneforseti.boundary.util.DefaultMessage
 import org.junit.Test
 
 import static org.araneforseti.boundary.TestUtil.scenario_messages_contains
-import static org.araneforseti.boundary.TestUtil.scenario_messages_contains
 import static org.araneforseti.boundary.TestUtil.scenarios_contains_value
+import static org.araneforseti.boundary.TestUtil.scenarios_use_messageName_instead_of_name
 
 class StringFieldTest {
     String messageName = "otherName"
-    StringField requiredString = new StringField("testField", "asdf", true, messageName)
-    StringField optionalString = new StringField("testField", "asdf", false, messageName)
+    String fieldName = "testField"
+    StringField requiredString = new StringField(fieldName, "asdf", true, messageName)
+    StringField optionalString = new StringField(fieldName, "asdf", false, messageName)
+    StringField defaultString = new StringField(fieldName, "asdf", true)
 
     @Test
     void required_strings_cannot_be_empty() {
@@ -33,8 +36,23 @@ class StringFieldTest {
 
 
     @Test
-    void boolean_message_uses_messageName() {
-        assert scenario_messages_contains(messageName, requiredString)
-        assert scenario_messages_contains(messageName, optionalString)
+    void message_uses_messageName() {
+        assert scenarios_use_messageName_instead_of_name(messageName, fieldName, requiredString)
+        assert scenarios_use_messageName_instead_of_name(messageName, fieldName, optionalString)
+    }
+
+    @Test
+    void default_messageName_is_fieldName() {
+        assert scenario_messages_contains(fieldName, defaultString)
+    }
+
+    @Test
+    void default_requiredMessage_is_default() {
+        assert scenario_messages_contains(DefaultMessage.defaultRequired(fieldName).build(), defaultString)
+    }
+
+    @Test
+    void default_validationMessage_is_default() {
+        assert scenario_messages_contains(DefaultMessage.defaultType(fieldName, "String").build(), defaultString)
     }
 }

@@ -1,17 +1,18 @@
 package org.araneforseti.boundary.fields
 
 import org.araneforseti.boundary.scenarios.BoundaryScenario
+import org.araneforseti.boundary.util.MessageConfiguration
 
 class EnumField extends Field {
     List<String> acceptedValues
 
-    EnumField(String name, String correctValue, boolean required, List acceptedValues, String messageName=null) {
-        super(name, correctValue, required, messageName)
+    EnumField(String name, String correctValue, boolean required, List acceptedValues, String messageName=null, MessageConfiguration messageConfiguration=null) {
+        super(name, correctValue, required, messageName, messageConfiguration)
         this.acceptedValues = acceptedValues
     }
 
-    EnumField(String name, List<String> acceptedValues, boolean required, String messageName=null) {
-        super(name, acceptedValues.first(), required, messageName)
+    EnumField(String name, List<String> acceptedValues, boolean required, String messageName=null, MessageConfiguration messageConfiguration=null) {
+        super(name, acceptedValues.first(), required, messageName, messageConfiguration)
         this.acceptedValues = acceptedValues
     }
 
@@ -32,6 +33,11 @@ class EnumField extends Field {
         scenarios.add(enumScenario(1))
 
         return scenarios
+    }
+
+    @Override
+    String fieldType() {
+        return "String"
     }
 
     BoundaryScenario enumScenario(value) {
