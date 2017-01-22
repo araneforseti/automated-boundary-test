@@ -5,8 +5,8 @@ import org.araneforseti.boundary.scenarios.BoundaryScenario
 class ArrayField extends Field {
     List<Field> fields = []
 
-    ArrayField(String name, boolean required) {
-        super(name, [], required)
+    ArrayField(String name, boolean required, String messageName=null) {
+        super(name, [], required, messageName)
     }
 
     ArrayField withField(Field field) {

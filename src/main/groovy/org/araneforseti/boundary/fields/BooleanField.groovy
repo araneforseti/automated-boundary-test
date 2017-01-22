@@ -3,16 +3,19 @@ package org.araneforseti.boundary.fields
 import org.araneforseti.boundary.scenarios.BoundaryScenario
 
 class BooleanField extends Field {
-    BooleanField(String fieldName, boolean required) {
-        super(fieldName, true, required)
+    String errorMessage
+
+    BooleanField(String fieldName, boolean required, String messageName=null) {
+        super(fieldName, true, required, messageName)
+        this.errorMessage = "${this.messageName} must be a boolean"
     }
 
     @Override
     List<BoundaryScenario> getCases() {
         List<BoundaryScenario> scenarios = super.getCases()
 
-        scenarios.add(new BoundaryScenario("${name} as a non-boolean string", "${name} must be boolean", "a"))
-        scenarios.add(new BoundaryScenario("${name} as a number", "${name} must be boolean", 2))
+        scenarios.add(new BoundaryScenario("${messageName} as a non-boolean string", errorMessage, "a"))
+        scenarios.add(new BoundaryScenario("${messageName} as a number", errorMessage, 2))
 
         return scenarios
     }

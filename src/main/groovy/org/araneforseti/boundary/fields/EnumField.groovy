@@ -5,13 +5,13 @@ import org.araneforseti.boundary.scenarios.BoundaryScenario
 class EnumField extends Field {
     List<String> acceptedValues
 
-    EnumField(String name, String correctValue, boolean required, List acceptedValues) {
-        super(name, correctValue, required)
+    EnumField(String name, String correctValue, boolean required, List acceptedValues, String messageName=null) {
+        super(name, correctValue, required, messageName)
         this.acceptedValues = acceptedValues
     }
 
-    EnumField(String name, List<String> acceptedValues, boolean required) {
-        super(name, acceptedValues.first(), required)
+    EnumField(String name, List<String> acceptedValues, boolean required, String messageName=null) {
+        super(name, acceptedValues.first(), required, messageName)
         this.acceptedValues = acceptedValues
     }
 
@@ -21,20 +21,20 @@ class EnumField extends Field {
 
         acceptedValues.each { value ->
             String numValue = value + "12"
-            scenarios.add(enumScenario(name, numValue))
+            scenarios.add(enumScenario(numValue))
 
             String typoValue = value.substring(0, value.length()-1)
-            scenarios.add(enumScenario(name, typoValue))
+            scenarios.add(enumScenario(typoValue))
         }
 
-        scenarios.add(enumScenario(name, "''"))
-        scenarios.add(enumScenario(name, "null"))
-        scenarios.add(enumScenario(name, 1))
+        scenarios.add(enumScenario("''"))
+        scenarios.add(enumScenario("null"))
+        scenarios.add(enumScenario(1))
 
         return scenarios
     }
 
-    BoundaryScenario enumScenario(String fieldName, value) {
-        new BoundaryScenario("${fieldName} as ${value}", "Valid ${fieldName}s are ${acceptedValues}", value)
+    BoundaryScenario enumScenario(value) {
+        new BoundaryScenario("$name as $value", "$messageName must be one of $acceptedValues", value)
     }
 }

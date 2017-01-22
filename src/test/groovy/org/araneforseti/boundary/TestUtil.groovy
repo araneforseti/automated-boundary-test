@@ -35,6 +35,16 @@ class TestUtil {
         return found
     }
 
+    static boolean scenario_messages_contains(String message, Field field) {
+        boolean found = false
+        field.getCases().each { scenario ->
+            if (scenario.expectedMessage.contains(message)) {
+                found = true
+            }
+        }
+        return found
+    }
+
     static final String responseKey = "message"
 
     static ExpectedResponse responseFor(String message, int statusCode = 400) {
