@@ -8,8 +8,8 @@ class DateField extends Field {
     String format
     String errorMessage
 
-    DateField(String name, String format, boolean required, String messageName=null) {
-        super(name, DateTime.now().toString(DateTimeFormat.forPattern(format)), required, messageName)
+    DateField(String name, String format, boolean required, String messageName=null, String requiredMessage=null) {
+        super(name, DateTime.now().toString(DateTimeFormat.forPattern(format)), required, messageName, requiredMessage)
         this.format = format
         this.errorMessage = "${this.messageName} must be a valid Datetime"
         print(errorMessage)
@@ -20,7 +20,7 @@ class DateField extends Field {
         List<BoundaryScenario> scenarios = super.getCases()
 
         if (isRequired) {
-            scenarios.add(new BoundaryScenario("${name} as empty string", "${messageName} is a required field", ""))
+            scenarios.add(new BoundaryScenario("${name} as empty string", requiredMessage, ""))
         }
 
         scenarios.add(new BoundaryScenario("${name} as a number", errorMessage, 1))

@@ -5,8 +5,8 @@ import org.araneforseti.boundary.scenarios.BoundaryScenario
 class ObjectField extends Field {
     List<Field> fieldList = []
 
-    ObjectField(String name, boolean required, String messageName=null) {
-        super(name, "N/A", required, messageName)
+    ObjectField(String name, boolean required, String messageName=null, String requiredMessage=null) {
+        super(name, "N/A", required, messageName, requiredMessage)
     }
 
     ObjectField withField(Field newField) {
@@ -19,7 +19,7 @@ class ObjectField extends Field {
         List<BoundaryScenario> scenarios = []
 
         if(isRequired) {
-            scenarios << new BoundaryScenario("$name as null", "$messageName is a required field", null)
+            scenarios << new BoundaryScenario("$name as null", requiredMessage, null)
         }
 
         fieldList.each{ field ->

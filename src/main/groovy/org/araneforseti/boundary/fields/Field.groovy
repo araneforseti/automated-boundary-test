@@ -8,8 +8,8 @@ abstract class Field {
     String name
     boolean isRequired
     def correctValue
-    def messageName
-    def requiredMessage
+    String messageName
+    String requiredMessage
 
     Field(String name, correctValue, boolean required, String messageName="", String requiredMessage="") {
         this.name = name
