@@ -19,10 +19,10 @@ class ObjectFieldTest {
 
     @Test
     public void must_be_an_object() {
-        ArrayField arrayField = new ArrayField("testField", false)
-        assert scenarios_contains_value(1, arrayField)
-        assert scenarios_contains_value("not an array", arrayField)
-        assert scenarios_contains_value(true, arrayField)
+        ObjectField objectField = new ObjectField("testField", false)
+        assert scenarios_contains_value(1, objectField)
+        assert scenarios_contains_value("not an object", objectField)
+        assert scenarios_contains_value(true, objectField)
     }
 
     @Test
