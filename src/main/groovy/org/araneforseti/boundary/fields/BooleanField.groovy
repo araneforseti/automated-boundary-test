@@ -1,10 +1,11 @@
 package org.araneforseti.boundary.fields
 
 import org.araneforseti.boundary.scenarios.BoundaryScenario
+import org.araneforseti.boundary.util.MessageConfiguration
 
 class BooleanField extends Field {
-    BooleanField(String fieldName, boolean required, String messageName=null) {
-        super(fieldName, true, required, messageName)
+    BooleanField(String fieldName, boolean required, String messageName = null, MessageConfiguration messageConfiguration = null) {
+        super(fieldName, true, required, messageName, messageConfiguration)
     }
 
     @Override
