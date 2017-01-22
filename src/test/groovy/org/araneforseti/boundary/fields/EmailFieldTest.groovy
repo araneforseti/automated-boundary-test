@@ -1,5 +1,6 @@
 package org.araneforseti.boundary.fields
 
+import org.araneforseti.boundary.util.MessageConfiguration
 import org.junit.Test
 
 import static org.araneforseti.boundary.TestUtil.scenario_messages_contains
@@ -7,8 +8,11 @@ import static org.araneforseti.boundary.TestUtil.scenarios_contains_value
 
 class EmailFieldTest {
     String messageName = "otherName"
-    EmailField requiredField = new EmailField("testField", true, messageName)
-    EmailField optionalField = new EmailField("testField", false, messageName)
+    private String fieldName = "testField"
+    MessageConfiguration messageConfiguration = new MessageConfiguration(messageName, "email")
+    EmailField requiredField = new EmailField(fieldName, true, messageConfiguration)
+    EmailField optionalField = new EmailField(fieldName, false, messageConfiguration)
+    EmailField defaultField = new EmailField(fieldName, false)
 
     @Test
     void required_field_cannot_be_empty_string() {
@@ -52,5 +56,10 @@ class EmailFieldTest {
     void field_uses_errorMessage() {
         scenario_messages_contains(messageName, optionalField)
         scenario_messages_contains(messageName, requiredField)
+    }
+
+    @Test
+    void field_uses_default_messageConfiguration() {
+        scenario_messages_contains(fieldName, defaultField)
     }
 }

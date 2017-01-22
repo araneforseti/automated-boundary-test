@@ -4,8 +4,8 @@ import org.araneforseti.boundary.scenarios.BoundaryScenario
 import org.araneforseti.boundary.util.MessageConfiguration
 
 class StringField extends Field {
-    StringField(String name, String correctValue, boolean required, String messageName=null, MessageConfiguration messageConfiguration=null) {
-        super(name, correctValue, required, messageName, messageConfiguration)
+    StringField(String name, String correctValue, boolean required, MessageConfiguration messageConfiguration = new MessageConfiguration(name, "String")) {
+        super(name, correctValue, required, messageConfiguration)
     }
 
     @Override
@@ -19,10 +19,5 @@ class StringField extends Field {
         scenarios.add(new BoundaryScenario("${name} as a number", messageConfiguration.validationMessage, 1))
 
         return scenarios
-    }
-
-    @Override
-    String fieldType() {
-        return "String"
     }
 }

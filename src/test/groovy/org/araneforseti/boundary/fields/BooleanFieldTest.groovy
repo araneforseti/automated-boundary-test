@@ -1,5 +1,6 @@
 package org.araneforseti.boundary.fields
 
+import org.araneforseti.boundary.util.MessageConfiguration
 import org.junit.Test
 
 import static org.araneforseti.boundary.TestUtil.scenario_messages_contains
@@ -7,8 +8,10 @@ import static org.araneforseti.boundary.TestUtil.scenarios_contains_value
 
 class BooleanFieldTest {
     String messageName = "otherName"
-    BooleanField requiredBoolean = new BooleanField("testField", true, messageName)
-    BooleanField optionalBoolean = new BooleanField("testField", false, messageName)
+    String fieldType = "boolean"
+    String fieldName = "testField"
+    BooleanField requiredBoolean = new BooleanField(fieldName, true)
+    BooleanField optionalBoolean = new BooleanField(fieldName, false)
 
     @Test
     void boolean_cannot_be_string() {
@@ -23,7 +26,17 @@ class BooleanFieldTest {
     }
 
     @Test
-    void boolean_message_uses_messageName() {
+    void boolean_message_uses_default_messageName() {
+        assert scenario_messages_contains(fieldName, requiredBoolean)
+        assert scenario_messages_contains(fieldName, optionalBoolean)
+    }
+
+    @Test
+    void boolean_message_uses_configured_messageName() {
+        def messageConfiguration = new MessageConfiguration(messageName, fieldType)
+        BooleanField requiredBoolean = new BooleanField(fieldName, true, messageConfiguration)
+        BooleanField optionalBoolean = new BooleanField(fieldName, false, messageConfiguration)
+
         assert scenario_messages_contains(messageName, requiredBoolean)
         assert scenario_messages_contains(messageName, optionalBoolean)
     }

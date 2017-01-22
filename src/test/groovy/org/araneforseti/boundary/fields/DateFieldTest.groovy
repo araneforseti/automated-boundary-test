@@ -1,5 +1,6 @@
 package org.araneforseti.boundary.fields
 
+import org.araneforseti.boundary.util.MessageConfiguration
 import org.junit.Test
 
 import static org.araneforseti.boundary.TestUtil.scenario_messages_contains
@@ -7,8 +8,11 @@ import static org.araneforseti.boundary.TestUtil.scenarios_contains_value
 
 class DateFieldTest {
     String messageName = "otherName"
-    DateField optionalField = new DateField("testField", "YYYY-MM-dd", false, messageName)
-    DateField requiredField = new DateField("testField", "YYYY-MM-dd", true, messageName)
+    String fieldName = "testField"
+    MessageConfiguration messageConfiguration = new MessageConfiguration(messageName, "Datetime")
+    DateField optionalField = new DateField(fieldName, "YYYY-MM-dd", false, messageConfiguration)
+    DateField requiredField = new DateField(fieldName, "YYYY-MM-dd", true, messageConfiguration)
+    DateField defaultField = new DateField(fieldName, "YYYY-MM-dd", true)
 
     @Test
     void required_field_cannot_be_empty_string() {
@@ -43,6 +47,11 @@ class DateFieldTest {
     @Test
     void error_message_uses_messageName() {
         assert test_both_messages(messageName)
+    }
+
+    @Test
+    void field_uses_default_messageConfiguration() {
+        scenario_messages_contains(fieldName, defaultField)
     }
 
     boolean test_both(value) {

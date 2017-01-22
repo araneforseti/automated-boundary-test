@@ -6,18 +6,20 @@ import org.araneforseti.boundary.util.MessageConfiguration
 class EnumField extends Field {
     List<String> acceptedValues
 
-    EnumField(String name, String correctValue, boolean required, List acceptedValues, String messageName=null, MessageConfiguration messageConfiguration=null) {
-        super(name, correctValue, required, messageName, messageConfiguration)
-        init(messageName, acceptedValues)
+    EnumField(String name, String correctValue, boolean required, List acceptedValues, MessageConfiguration messageConfiguration = null) {
+        super(name, correctValue, required, messageConfiguration)
+        init(acceptedValues)
     }
 
-    EnumField(String name, List<String> acceptedValues, boolean required, String messageName=null, MessageConfiguration messageConfiguration=null) {
-        super(name, acceptedValues.first(), required, messageName, messageConfiguration)
-        init(messageName, acceptedValues)
+    EnumField(String name, List<String> acceptedValues, boolean required, MessageConfiguration messageConfiguration = null) {
+        super(name, acceptedValues.first(), required, messageConfiguration)
+        init(acceptedValues)
     }
 
-    private void init(String messageName, List acceptedValues) {
-        this.messageConfiguration.validationMessage = "$messageName must be one of $acceptedValues"
+    private void init(List acceptedValues) {
+        if(!messageConfiguration) {
+            messageConfiguration = defaultMessageConfiguration(name, acceptedValues)
+        }
         this.acceptedValues = acceptedValues
     }
 
@@ -40,12 +42,11 @@ class EnumField extends Field {
         return scenarios
     }
 
-    @Override
-    String fieldType() {
-        return "String"
-    }
-
     BoundaryScenario enumScenario(value) {
         new BoundaryScenario("$name as $value", messageConfiguration.validationMessage, value)
+    }
+
+    static MessageConfiguration defaultMessageConfiguration(String messageName, List<String> acceptedValues) {
+        new MessageConfiguration(messageName, "Enum", "$messageName must be one of $acceptedValues")
     }
 }

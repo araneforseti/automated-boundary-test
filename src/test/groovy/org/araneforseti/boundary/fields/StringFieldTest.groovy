@@ -1,17 +1,17 @@
 package org.araneforseti.boundary.fields
 
 import org.araneforseti.boundary.util.DefaultMessage
+import org.araneforseti.boundary.util.MessageConfiguration
 import org.junit.Test
 
-import static org.araneforseti.boundary.TestUtil.scenario_messages_contains
-import static org.araneforseti.boundary.TestUtil.scenarios_contains_value
-import static org.araneforseti.boundary.TestUtil.scenarios_use_messageName_instead_of_name
+import static org.araneforseti.boundary.TestUtil.*
 
 class StringFieldTest {
     String messageName = "otherName"
     String fieldName = "testField"
-    StringField requiredString = new StringField(fieldName, "asdf", true, messageName)
-    StringField optionalString = new StringField(fieldName, "asdf", false, messageName)
+    MessageConfiguration messageConfiguration = new MessageConfiguration(messageName, "String")
+    StringField requiredString = new StringField(fieldName, "asdf", true, messageConfiguration)
+    StringField optionalString = new StringField(fieldName, "asdf", false, messageConfiguration)
     StringField defaultString = new StringField(fieldName, "asdf", true)
 
     @Test
@@ -37,6 +37,7 @@ class StringFieldTest {
 
     @Test
     void message_uses_messageName() {
+
         assert scenarios_use_messageName_instead_of_name(messageName, fieldName, requiredString)
         assert scenarios_use_messageName_instead_of_name(messageName, fieldName, optionalString)
     }
