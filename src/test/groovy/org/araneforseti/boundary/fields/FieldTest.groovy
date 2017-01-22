@@ -1,5 +1,6 @@
 package org.araneforseti.boundary.fields
 
+import org.araneforseti.boundary.util.DefaultMessages
 import org.junit.Test
 
 import static org.araneforseti.boundary.TestUtil.scenarios_contains_value
@@ -23,6 +24,14 @@ class FieldTest {
     @Test
     void field_message_name_defaults_to_name() {
         assert (new TestField("testField", "foo", false)).messageName == "testField"
+    }
+
+
+    @Test
+    void field_required_message_defaults_to_class() {
+        String fieldName = "testField"
+        String requiredMessage = DefaultMessages.requiredMessageWith(fieldName)
+        assert (new TestField(fieldName, "foo", false)).requiredMessage == requiredMessage
     }
 
     class TestField extends Field {

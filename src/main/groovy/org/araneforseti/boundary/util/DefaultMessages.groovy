@@ -7,4 +7,8 @@ class DefaultMessages {
     static String insertName(String name, String fullString) {
         fullString.replaceAll(REPLACEMENT, name)
     }
+
+    static String requiredMessageWith(String name) {
+        insertName(name, REQUIRED_MESSAGE)
+    }
 }
