@@ -27,12 +27,12 @@ class DateFieldTest {
     }
 
     @Test
-    void cannot_be_boolean_true() {
+    void cannot_be_date_true() {
         assert test_both(true)
     }
 
     @Test
-    void cannot_be_boolean_false() {
+    void cannot_be_date_false() {
         assert test_both(false)
     }
 
@@ -42,20 +42,35 @@ class DateFieldTest {
     }
 
     @Test
-    void field_uses_default_messageConfiguration() {
-        def defaultValidationMessage = DefaultMessage.defaultType(fieldName, "Datetime").build()
-        def defaultRequiredMessage = DefaultMessage.defaultRequired(fieldName).build()
-        assert scenario_messages_contains(defaultValidationMessage, optionalField)
-        assert scenario_messages_contains(defaultValidationMessage, requiredField)
-        assert scenario_messages_contains(defaultRequiredMessage, requiredField)
+    void required_date_field_defaults_validation_message() {
+        String fieldName = "DefaultDate"
+        DateField defaultDate = new DateField(fieldName, "YYYY-MM-dd", true)
+        assert scenario_messages_contains("$fieldName must be a Datetime", defaultDate)
     }
 
     @Test
-    void field_uses_custom_messageConfiguration() {
-        MessageConfiguration messageConfiguration = new MessageConfiguration(messageName, fieldType)
-        DateField optional = new DateField("optionalField", "YYYY-MM-dd", false, messageConfiguration)
-        DateField required = new DateField("requiredField", "YYYY-MM-dd", true, messageConfiguration)
-        assert_messageConfiguration_is_used_for_scenarios(messageConfiguration, optional, required)
+    void optional_date_field_defaults_validation_message() {
+        String fieldName = "DefaultDate"
+        DateField defaultDate = new DateField(fieldName, "YYYY-MM-dd", false)
+        assert scenario_messages_contains("$fieldName must be a Datetime", defaultDate)
+    }
+
+    @Test
+    void required_date_field_uses_custom_validation_message() {
+        def messageName = "DateFieldMessageName"
+        def messageType = "DateFieldType"
+        def messageConfiguration = new MessageConfiguration(messageName, messageType)
+        DateField required = new DateField(fieldName, "YYYY-MM-dd", true, messageConfiguration)
+        assert scenario_messages_contains("$messageName must be a $messageType", required)
+    }
+
+    @Test
+    void optional_date_field_uses_custom_validation_message() {
+        def messageName = "DateFieldMessageName"
+        def messageType = "DateFieldType"
+        def messageConfiguration = new MessageConfiguration(messageName, messageType)
+        DateField required = new DateField(fieldName, "YYYY-MM-dd", false, messageConfiguration)
+        assert scenario_messages_contains("$messageName must be a $messageType", required)
     }
 
     boolean test_both(value) {

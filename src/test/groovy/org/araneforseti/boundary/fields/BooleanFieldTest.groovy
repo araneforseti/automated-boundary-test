@@ -24,19 +24,34 @@ class BooleanFieldTest {
     }
 
     @Test
-    void boolean_message_uses_default_messageConfiguration() {
-        def defaultValidationMessage = DefaultMessage.defaultType(fieldName, "boolean").build()
-        def defaultRequiredMessage = DefaultMessage.defaultRequired(fieldName).build()
-        assert scenario_messages_contains(defaultRequiredMessage, requiredBoolean)
-        assert scenario_messages_contains(defaultValidationMessage, requiredBoolean)
-        assert scenario_messages_contains(defaultValidationMessage, optionalBoolean)
+    void required_boolean_field_defaults_validation_message() {
+        String fieldName = "DefaultBoolean"
+        BooleanField defaultBoolean = new BooleanField(fieldName, true)
+        assert scenario_messages_contains("$fieldName must be a boolean", defaultBoolean)
     }
 
     @Test
-    void boolean_message_uses_custom_messageConfiguration() {
-        def messageConfiguration = new MessageConfiguration(messageName, fieldType)
-        BooleanField requiredBoolean = new BooleanField(fieldName, true, messageConfiguration)
-        BooleanField optionalBoolean = new BooleanField(fieldName, false, messageConfiguration)
-        assert_messageConfiguration_is_used_for_scenarios(messageConfiguration, optionalBoolean, requiredBoolean)
+    void optional_boolean_field_defaults_validation_message() {
+        String fieldName = "DefaultBoolean"
+        BooleanField defaultBoolean = new BooleanField(fieldName, false)
+        assert scenario_messages_contains("$fieldName must be a boolean", defaultBoolean)
+    }
+
+    @Test
+    void required_boolean_field_uses_custom_validation_message() {
+        def messageName = "BooleanFieldMessageName"
+        def messageType = "BooleanFieldType"
+        def messageConfiguration = new MessageConfiguration(messageName, messageType)
+        BooleanField required = new BooleanField("Bool", true, messageConfiguration)
+        assert scenario_messages_contains("$messageName must be a $messageType", required)
+    }
+
+    @Test
+    void optional_boolean_field_uses_custom_validation_message() {
+        def messageName = "BooleanFieldMessageName"
+        def messageType = "BooleanFieldType"
+        def messageConfiguration = new MessageConfiguration(messageName, messageType)
+        BooleanField required = new BooleanField("foo", false, messageConfiguration)
+        assert scenario_messages_contains("$messageName must be a $messageType", required)
     }
 }

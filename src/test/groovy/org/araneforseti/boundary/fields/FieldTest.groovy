@@ -32,7 +32,7 @@ class FieldTest {
 
     class TestField extends Field {
         TestField(String name, Object correctValue, boolean required, String fieldName=null) {
-            super(name, correctValue, required, new MessageConfiguration(fieldName?:name, fieldType))
+            super(name, correctValue, required, new MessageConfiguration(fieldName?:name, "field"))
         }
     }
 }

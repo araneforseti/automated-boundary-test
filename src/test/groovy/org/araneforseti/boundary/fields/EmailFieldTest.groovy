@@ -44,23 +44,40 @@ class EmailFieldTest {
     }
 
     @Test
-    void field_cannot_be_boolean() {
+    void field_cannot_be_email() {
         assert scenarios_contains_value(true, requiredField)
         assert scenarios_contains_value(false, optionalField)
     }
 
     @Test
-    void field_uses_default_messageConfiguration() {
-        assert scenario_messages_contains("$fieldName not a well-formed email address", optionalField)
-        assert scenario_messages_contains("$fieldName not a well-formed email address", requiredField)
-        assert scenario_messages_contains(DefaultMessage.defaultRequired(fieldName).build(), requiredField)
+    void required_email_field_defaults_validation_message() {
+        String fieldName = "DefaultEmail"
+        EmailField defaultEmail = new EmailField(fieldName, true)
+        assert scenario_messages_contains("$fieldName not a well-formed email address", defaultEmail)
     }
 
     @Test
-    void field_uses_custom_messageConfiguration() {
-        MessageConfiguration messageConfiguration = new MessageConfiguration(messageName, fieldType)
-        EmailField optional = new EmailField("optionalField", false, messageConfiguration)
-        EmailField required = new EmailField("requiredField", true, messageConfiguration)
-        assert_messageConfiguration_is_used_for_scenarios(messageConfiguration, optional, required)
+    void optional_email_field_defaults_validation_message() {
+        String fieldName = "DefaultEmail"
+        EmailField defaultEmail = new EmailField(fieldName, false)
+        assert scenario_messages_contains("$fieldName not a well-formed email address", defaultEmail)
+    }
+
+    @Test
+    void required_email_field_uses_custom_validation_message() {
+        def messageName = "EmailFieldMessageName"
+        def messageType = "EmailFieldType"
+        def messageConfiguration = new MessageConfiguration(messageName, messageType)
+        EmailField emailField = new EmailField("Bool", true, messageConfiguration)
+        assert scenario_messages_contains("$messageName must be a $messageType", emailField)
+    }
+
+    @Test
+    void optional_email_field_uses_custom_validation_message() {
+        def messageName = "EmailFieldMessageName"
+        def messageType = "EmailFieldType"
+        def messageConfiguration = new MessageConfiguration(messageName, messageType)
+        EmailField emailField = new EmailField("foo", false, messageConfiguration)
+        assert scenario_messages_contains("$messageName must be a $messageType", emailField)
     }
 }

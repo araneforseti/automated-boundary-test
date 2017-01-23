@@ -32,17 +32,34 @@ class EnumFieldTest {
     }
 
     @Test
-    void field_uses_default_messageConfiguration() {
-        assert scenario_messages_contains(DefaultMessage.defaultRequired(fieldName).build(), requiredField)
-        assert scenario_messages_contains("$fieldName must be one of [A, B]", requiredField)
-        assert scenario_messages_contains("$fieldName must be one of [A, B]", optionalField)
+    void required_enum_field_defaults_validation_message() {
+        String fieldName = "DefaultEnum"
+        EnumField defaultEnum = new EnumField(fieldName, ["1", "2"], true)
+        assert scenario_messages_contains("$fieldName must be one of [1, 2]", defaultEnum)
     }
 
     @Test
-    void field_uses_custom_messageConfiguration() {
-        MessageConfiguration messageConfiguration = new MessageConfiguration(messageName, fieldType)
-        EnumField optional = new EnumField("optionalField", ['a', 'b'], false, messageConfiguration)
-        EnumField required = new EnumField("requiredField", ['a', 'b'], true, messageConfiguration)
-        assert_messageConfiguration_is_used_for_scenarios(messageConfiguration, optional, required)
+    void optional_enum_field_defaults_validation_message() {
+        String fieldName = "DefaultEnum"
+        EnumField defaultEnum = new EnumField(fieldName, ["1", "2"], false)
+        assert scenario_messages_contains("$fieldName must be one of [1, 2]", defaultEnum)
+    }
+
+    @Test
+    void required_enum_field_uses_custom_validation_message() {
+        def messageName = "EnumFieldMessageName"
+        def messageType = "EnumFieldType"
+        def messageConfiguration = new MessageConfiguration(messageName, messageType)
+        EnumField requiredEnum = new EnumField(fieldName, ["1", "2"], true, messageConfiguration)
+        assert scenario_messages_contains("$messageName must be a $messageType", requiredEnum)
+    }
+
+    @Test
+    void optional_enum_field_uses_custom_validation_message() {
+        def messageName = "EnumFieldMessageName"
+        def messageType = "EnumFieldType"
+        def messageConfiguration = new MessageConfiguration(messageName, messageType)
+        EnumField optionalEnum = new EnumField(fieldName, ["1", "2"], false, messageConfiguration)
+        assert scenario_messages_contains("$messageName must be a $messageType", optionalEnum)
     }
 }

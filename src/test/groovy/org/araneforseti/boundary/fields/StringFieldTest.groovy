@@ -32,20 +32,34 @@ class StringFieldTest {
     }
 
     @Test
-    void field_uses_default_messageConfiguration() {
-        def defaultValidationMessage = DefaultMessage.defaultType(fieldName, "String").build()
-        def defaultRequiredMessage = DefaultMessage.defaultRequired(fieldName).build()
-        assert scenario_messages_contains(defaultRequiredMessage, requiredString)
-        assert scenario_messages_contains(defaultValidationMessage, requiredString)
-        assert scenario_messages_contains(defaultValidationMessage, optionalString)
+    void required_string_field_defaults_validation_message() {
+        String fieldName = "DefaultString"
+        StringField defaultString = new StringField(fieldName, "asdf", true)
+        assert scenario_messages_contains("$fieldName must be a String", defaultString)
     }
 
     @Test
-    void field_uses_custom_messageConfiguration() {
-        MessageConfiguration messageConfiguration = new MessageConfiguration(messageName, fieldType)
-        StringField optional = new StringField("optionalString", "asdf", false, messageConfiguration)
-        StringField required = new StringField("requiredString", "fdsa", true, messageConfiguration)
-        assert_messageConfiguration_is_used_for_scenarios(messageConfiguration, optional, required)
+    void optional_string_field_defaults_validation_message() {
+        String fieldName = "DefaultString"
+        StringField defaultString = new StringField(fieldName, "asdf", false)
+        assert scenario_messages_contains("$fieldName must be a String", defaultString)
     }
 
+    @Test
+    void required_string_field_uses_custom_validation_message() {
+        def messageName = "StringFieldMessageName"
+        def messageType = "StringFieldType"
+        def messageConfiguration = new MessageConfiguration(messageName, messageType)
+        StringField requiredString = new StringField(fieldName, "asdf", true, messageConfiguration)
+        assert scenario_messages_contains("$messageName must be a $messageType", requiredString)
+    }
+
+    @Test
+    void optional_string_field_uses_custom_validation_message() {
+        def messageName = "StringFieldMessageName"
+        def messageType = "StringFieldType"
+        def messageConfiguration = new MessageConfiguration(messageName, messageType)
+        StringField optionalString = new StringField(fieldName, "asdf", false, messageConfiguration)
+        assert scenario_messages_contains("$messageName must be a $messageType", optionalString)
+    }
 }
