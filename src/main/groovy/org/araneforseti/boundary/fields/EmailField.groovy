@@ -19,6 +19,7 @@ class EmailField extends Field {
         scenarios.add(new BoundaryScenario("$name missing '@'", messageConfiguration.validationMessage, "testtest.com"))
         scenarios.add(new BoundaryScenario("$name as a number", messageConfiguration.validationMessage, 123))
         scenarios.add(new BoundaryScenario("$name as a boolean", messageConfiguration.validationMessage, true))
+        scenarios.add(new BoundaryScenario("$name as a boolean", messageConfiguration.validationMessage, false))
 
         return scenarios
     }

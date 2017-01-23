@@ -1,18 +1,15 @@
 package org.araneforseti.boundary.fields
 
+import org.araneforseti.boundary.util.DefaultMessage
 import org.araneforseti.boundary.util.MessageConfiguration
 import org.junit.Test
 
-import static org.araneforseti.boundary.TestUtil.scenario_messages_contains
-import static org.araneforseti.boundary.TestUtil.scenarios_contains_value
+import static org.araneforseti.boundary.TestUtil.*
 
 class EmailFieldTest {
-    String messageName = "otherName"
     private String fieldName = "testField"
-    MessageConfiguration messageConfiguration = new MessageConfiguration(messageName, "email")
-    EmailField requiredField = new EmailField(fieldName, true, messageConfiguration)
-    EmailField optionalField = new EmailField(fieldName, false, messageConfiguration)
-    EmailField defaultField = new EmailField(fieldName, false)
+    EmailField requiredField = new EmailField(fieldName, true)
+    EmailField optionalField = new EmailField(fieldName, false)
 
     @Test
     void required_field_cannot_be_empty_string() {
@@ -48,18 +45,22 @@ class EmailFieldTest {
 
     @Test
     void field_cannot_be_boolean() {
-        scenarios_contains_value(true, requiredField)
-        scenarios_contains_value(false, optionalField)
-    }
-
-    @Test
-    void field_uses_errorMessage() {
-        scenario_messages_contains(messageName, optionalField)
-        scenario_messages_contains(messageName, requiredField)
+        assert scenarios_contains_value(true, requiredField)
+        assert scenarios_contains_value(false, optionalField)
     }
 
     @Test
     void field_uses_default_messageConfiguration() {
-        scenario_messages_contains(fieldName, defaultField)
+        assert scenario_messages_contains("$fieldName not a well-formed email address", optionalField)
+        assert scenario_messages_contains("$fieldName not a well-formed email address", requiredField)
+        assert scenario_messages_contains(DefaultMessage.defaultRequired(fieldName).build(), requiredField)
+    }
+
+    @Test
+    void field_uses_custom_messageConfiguration() {
+        MessageConfiguration messageConfiguration = new MessageConfiguration(messageName, fieldType)
+        EmailField optional = new EmailField("optionalField", false, messageConfiguration)
+        EmailField required = new EmailField("requiredField", true, messageConfiguration)
+        assert_messageConfiguration_is_used_for_scenarios(messageConfiguration, optional, required)
     }
 }

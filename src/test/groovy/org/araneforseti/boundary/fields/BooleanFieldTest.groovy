@@ -1,14 +1,12 @@
 package org.araneforseti.boundary.fields
 
+import org.araneforseti.boundary.util.DefaultMessage
 import org.araneforseti.boundary.util.MessageConfiguration
 import org.junit.Test
 
-import static org.araneforseti.boundary.TestUtil.scenario_messages_contains
-import static org.araneforseti.boundary.TestUtil.scenarios_contains_value
+import static org.araneforseti.boundary.TestUtil.*
 
 class BooleanFieldTest {
-    String messageName = "otherName"
-    String fieldType = "boolean"
     String fieldName = "testField"
     BooleanField requiredBoolean = new BooleanField(fieldName, true)
     BooleanField optionalBoolean = new BooleanField(fieldName, false)
@@ -26,18 +24,19 @@ class BooleanFieldTest {
     }
 
     @Test
-    void boolean_message_uses_default_messageName() {
-        assert scenario_messages_contains(fieldName, requiredBoolean)
-        assert scenario_messages_contains(fieldName, optionalBoolean)
+    void boolean_message_uses_default_messageConfiguration() {
+        def defaultValidationMessage = DefaultMessage.defaultType(fieldName, "boolean").build()
+        def defaultRequiredMessage = DefaultMessage.defaultRequired(fieldName).build()
+        assert scenario_messages_contains(defaultRequiredMessage, requiredBoolean)
+        assert scenario_messages_contains(defaultValidationMessage, requiredBoolean)
+        assert scenario_messages_contains(defaultValidationMessage, optionalBoolean)
     }
 
     @Test
-    void boolean_message_uses_configured_messageName() {
+    void boolean_message_uses_custom_messageConfiguration() {
         def messageConfiguration = new MessageConfiguration(messageName, fieldType)
         BooleanField requiredBoolean = new BooleanField(fieldName, true, messageConfiguration)
         BooleanField optionalBoolean = new BooleanField(fieldName, false, messageConfiguration)
-
-        assert scenario_messages_contains(messageName, requiredBoolean)
-        assert scenario_messages_contains(messageName, optionalBoolean)
+        assert_messageConfiguration_is_used_for_scenarios(messageConfiguration, optionalBoolean, requiredBoolean)
     }
 }

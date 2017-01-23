@@ -1,18 +1,15 @@
 package org.araneforseti.boundary.fields
 
+import org.araneforseti.boundary.util.DefaultMessage
 import org.araneforseti.boundary.util.MessageConfiguration
 import org.junit.Test
 
-import static org.araneforseti.boundary.TestUtil.scenario_messages_contains
-import static org.araneforseti.boundary.TestUtil.scenarios_contains_value
+import static org.araneforseti.boundary.TestUtil.*
 
 class DateFieldTest {
-    String messageName = "otherName"
     String fieldName = "testField"
-    MessageConfiguration messageConfiguration = new MessageConfiguration(messageName, "Datetime")
-    DateField optionalField = new DateField(fieldName, "YYYY-MM-dd", false, messageConfiguration)
-    DateField requiredField = new DateField(fieldName, "YYYY-MM-dd", true, messageConfiguration)
-    DateField defaultField = new DateField(fieldName, "YYYY-MM-dd", true)
+    DateField optionalField = new DateField(fieldName, "YYYY-MM-dd", false)
+    DateField requiredField = new DateField(fieldName, "YYYY-MM-dd", true)
 
     @Test
     void required_field_cannot_be_empty_string() {
@@ -45,22 +42,24 @@ class DateFieldTest {
     }
 
     @Test
-    void error_message_uses_messageName() {
-        assert test_both_messages(messageName)
+    void field_uses_default_messageConfiguration() {
+        def defaultValidationMessage = DefaultMessage.defaultType(fieldName, "Datetime").build()
+        def defaultRequiredMessage = DefaultMessage.defaultRequired(fieldName).build()
+        assert scenario_messages_contains(defaultValidationMessage, optionalField)
+        assert scenario_messages_contains(defaultValidationMessage, requiredField)
+        assert scenario_messages_contains(defaultRequiredMessage, requiredField)
     }
 
     @Test
-    void field_uses_default_messageConfiguration() {
-        scenario_messages_contains(fieldName, defaultField)
+    void field_uses_custom_messageConfiguration() {
+        MessageConfiguration messageConfiguration = new MessageConfiguration(messageName, fieldType)
+        DateField optional = new DateField("optionalField", "YYYY-MM-dd", false, messageConfiguration)
+        DateField required = new DateField("requiredField", "YYYY-MM-dd", true, messageConfiguration)
+        assert_messageConfiguration_is_used_for_scenarios(messageConfiguration, optional, required)
     }
 
     boolean test_both(value) {
-        scenarios_contains_value(value, requiredField)
+        scenarios_contains_value(value, requiredField) &&
         scenarios_contains_value(value, optionalField)
-    }
-
-    boolean test_both_messages(String value) {
-        scenario_messages_contains(value, requiredField)
-        scenario_messages_contains(value, optionalField)
     }
 }
