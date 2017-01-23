@@ -7,10 +7,7 @@ import org.araneforseti.boundary.definitions.ExpectedResponse
 import org.araneforseti.boundary.definitions.RequestDefinition
 import org.araneforseti.boundary.definitions.path.Identifier
 import org.araneforseti.boundary.definitions.path.PathDefinition
-import org.araneforseti.boundary.fields.BooleanField
-import org.araneforseti.boundary.fields.EnumField
-import org.araneforseti.boundary.fields.NumberField
-import org.araneforseti.boundary.fields.StringField
+import org.araneforseti.boundary.fields.*
 import org.mbtest.javabank.Client
 import org.mbtest.javabank.fluent.ImposterBuilder
 import spock.lang.Shared
@@ -45,7 +42,10 @@ class TestBoundaryTest extends Specification{
             .withBodyDefinition(new Definition()
                 .withField(new StringField("stringField", "string value", true))
                 .withField(new BooleanField("booleanField", true))
-                .withField(new NumberField("numberField", false)))
+                .withField(new NumberField("numberField", false))
+                .withField(new ArrayField("arrayField", false)
+                    .withField(new NumberField("numberField1", true))
+                    .withField(new StringField("stringField1", "asdf", true))))
 
     @Unroll
     void 'passing POST #name'() {

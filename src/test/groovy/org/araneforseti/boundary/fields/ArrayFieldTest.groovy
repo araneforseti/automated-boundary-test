@@ -8,13 +8,21 @@ class ArrayFieldTest {
     @Test
     public void required_field_cannot_be_null() {
         ArrayField arrayField = new ArrayField("testField", true)
-        scenarios_contains_value(null, arrayField)
+        assert scenarios_contains_value(null, arrayField)
     }
 
     @Test
     public void optional_field_can_be_null() {
         ArrayField arrayField = new ArrayField("testField", false)
         assert !scenarios_contains_value(null, arrayField)
+    }
+
+    @Test
+    public void must_be_an_array() {
+        ArrayField arrayField = new ArrayField("testField", false)
+        assert scenarios_contains_value(1, arrayField)
+        assert scenarios_contains_value("not an array", arrayField)
+        assert scenarios_contains_value(true, arrayField)
     }
 
     @Test

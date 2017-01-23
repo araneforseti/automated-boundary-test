@@ -32,6 +32,8 @@ class ObjectField extends Field {
             }
         }
 
+        scenarios.addAll(notAnObjectScenarios())
+
         return scenarios
     }
 
@@ -43,10 +45,17 @@ class ObjectField extends Field {
                 value)
     }
 
-    BoundaryScenario objectScenario(BoundaryScenario fieldScenario, Field field) {
+    protected BoundaryScenario objectScenario(BoundaryScenario fieldScenario, Field field) {
         BoundaryScenario scenario = fieldScenario
         scenario.value = getCorrectValue(field.name, fieldScenario.getValue())
         return scenario
+    }
+
+    protected List<BoundaryScenario> notAnObjectScenarios() {
+        List<Object> notAnObject = [1, "not an object", true]
+        notAnObject.collect { value ->
+            new BoundaryScenario("$name as $value", "$name must be an array", value)
+        }
     }
 
     def getCorrectValue(fieldName="", value="") {

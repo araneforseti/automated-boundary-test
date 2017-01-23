@@ -17,7 +17,7 @@ class ArrayField extends Field {
 
     @Override
     List<BoundaryScenario> getCases() {
-        List<BoundaryScenario> scenarios = []
+        List<BoundaryScenario> scenarios = super.getCases()
 
         fields.each{ field ->
             field.getCases().each { scenario ->
@@ -25,13 +25,22 @@ class ArrayField extends Field {
             }
         }
 
+        scenarios.addAll(notAnArrayScenarios())
+
         return scenarios
     }
 
-    BoundaryScenario arrayScenario(BoundaryScenario fieldScenario, Field field) {
+    protected BoundaryScenario arrayScenario(BoundaryScenario fieldScenario, Field field) {
         BoundaryScenario scenario = fieldScenario
         scenario.value = getCorrectValue(field.name, fieldScenario.getValue())
         return scenario
+    }
+
+    protected List<BoundaryScenario> notAnArrayScenarios() {
+        List<Object> notAnArray = [1, "not an array", true]
+        notAnArray.collect { value ->
+            new BoundaryScenario("$name as $value", "$name must be an array", value)
+        }
     }
 
     @Override

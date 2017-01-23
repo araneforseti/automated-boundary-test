@@ -18,6 +18,14 @@ class ObjectFieldTest {
     }
 
     @Test
+    public void must_be_an_object() {
+        ObjectField objectField = new ObjectField("testField", false)
+        assert scenarios_contains_value(1, objectField)
+        assert scenarios_contains_value("not an object", objectField)
+        assert scenarios_contains_value(true, objectField)
+    }
+
+    @Test
     public void gives_cases_for_fields() {
         ObjectField objectField = new ObjectField("testField", true)
                 .withField(new BooleanField("bool", true))
