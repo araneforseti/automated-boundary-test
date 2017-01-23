@@ -8,7 +8,7 @@ class MessageConfiguration {
 
     MessageConfiguration(String messageName, String fieldType, String validationMessage = null, String requiredMessage = null) {
         this.messageName = messageName
-        this.fieldType = fieldType
+        this.fieldType = fieldType ?: "field"
         this.requiredMessage = requiredMessage ?: DefaultMessage.defaultRequired(messageName).build()
         this.validationMessage = validationMessage ?: DefaultMessage.defaultType(messageName, fieldType).build()
     }

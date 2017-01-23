@@ -7,7 +7,7 @@ import static org.araneforseti.boundary.TestUtil.scenarios_contains_value
 
 class DefinitionTest {
     @Test
-    public void gives_cases_for_fields() {
+    void gives_cases_for_fields() {
         Definition definition = new Definition()
                 .withField(new BooleanField("bool", true))
                 .withField(new BooleanField("bool2", false))
