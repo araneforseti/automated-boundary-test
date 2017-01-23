@@ -18,13 +18,21 @@ class FieldTest {
 
     @Test
     void required_field_message_uses_message_configuration() {
-        TestField testField = new TestField("testField", "foo", true)
-        assert scenario_messages_contains("$messageName is a required field", testField)
+        String fieldMessageName = "messageNameForField"
+        Field testField = new TestField("testField", "foo", true, fieldMessageName)
+        assert scenario_messages_contains("$fieldMessageName is a required field", testField)
+    }
+
+    @Test
+    void field_message_name_defaults_to_name() {
+        def fieldName = "testFieldName"
+        Field testField = new TestField(fieldName, "foo", true)
+        assert scenario_messages_contains("$fieldName is a required field", testField)
     }
 
     class TestField extends Field {
-        TestField(String name, Object correctValue, boolean required) {
-            super(name, correctValue, required, new MessageConfiguration(messageName, fieldType))
+        TestField(String name, Object correctValue, boolean required, String fieldName=null) {
+            super(name, correctValue, required, new MessageConfiguration(fieldName?:name, fieldType))
         }
     }
 }

@@ -2,6 +2,7 @@ package org.araneforseti.boundary.fields
 
 
 import org.araneforseti.boundary.scenarios.BoundaryScenario
+import org.araneforseti.boundary.util.DefaultMessage
 import org.araneforseti.boundary.util.MessageConfiguration
 
 abstract class Field {
@@ -14,7 +15,7 @@ abstract class Field {
         this.name = name
         this.isRequired = required
         this.correctValue = correctValue
-        this.messageConfiguration = messageConfiguration
+        this.messageConfiguration = messageConfiguration ?: defaultMessageConfiguration()
     }
 
     List<BoundaryScenario> getCases() {
@@ -23,5 +24,10 @@ abstract class Field {
 
     def getCorrectValue(fieldName="", value="") {
         return correctValue
+    }
+
+    MessageConfiguration defaultMessageConfiguration() {
+        this.messageConfiguration = new MessageConfiguration(DefaultMessage.defaultRequired(name).build(),
+                DefaultMessage.defaultType(name, "field").build())
     }
 }

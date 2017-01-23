@@ -8,19 +8,16 @@ class EnumField extends Field {
 
     EnumField(String name, String correctValue, boolean required, List acceptedValues, MessageConfiguration messageConfiguration = null) {
         super(name, correctValue, required, messageConfiguration)
-        init(acceptedValues)
+        this.acceptedValues = acceptedValues
+        this.messageConfiguration = messageConfiguration ?:
+                new MessageConfiguration(this.name, "Enum", "${this.name} must be one of ${this.acceptedValues}")
     }
 
     EnumField(String name, List<String> acceptedValues, boolean required, MessageConfiguration messageConfiguration = null) {
         super(name, acceptedValues.first(), required, messageConfiguration)
-        init(acceptedValues)
-    }
-
-    private void init(List acceptedValues) {
-        if(!messageConfiguration) {
-            messageConfiguration = defaultMessageConfiguration(name, acceptedValues)
-        }
         this.acceptedValues = acceptedValues
+        this.messageConfiguration = messageConfiguration ?:
+                new MessageConfiguration(this.name, "Enum", "${this.name} must be one of ${this.acceptedValues}")
     }
 
     @Override
@@ -44,9 +41,5 @@ class EnumField extends Field {
 
     BoundaryScenario enumScenario(value) {
         new BoundaryScenario("$name as $value", messageConfiguration.validationMessage, value)
-    }
-
-    static MessageConfiguration defaultMessageConfiguration(String messageName, List<String> acceptedValues) {
-        new MessageConfiguration(messageName, "Enum", "$messageName must be one of $acceptedValues")
     }
 }
