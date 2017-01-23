@@ -1,12 +1,13 @@
 package org.araneforseti.boundary.fields
 
 import org.araneforseti.boundary.scenarios.BoundaryScenario
+import org.araneforseti.boundary.util.MessageConfiguration
 
 class ArrayField extends Field {
     List<Field> fields = []
 
-    ArrayField(String name, boolean required, String messageName=null) {
-        super(name, [], required, messageName)
+    ArrayField(String name, boolean required, MessageConfiguration messageConfiguration = new MessageConfiguration(name, "Array")) {
+        super(name, [], required, messageConfiguration)
     }
 
     ArrayField withField(Field field) {
@@ -46,10 +47,5 @@ class ArrayField extends Field {
         }
         values.add(firstValue)
         return values
-    }
-
-    @Override
-    String fieldType() {
-        return "Array"
     }
 }

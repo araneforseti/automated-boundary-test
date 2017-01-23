@@ -1,7 +1,6 @@
 package org.araneforseti.boundary.fields
 
 import org.araneforseti.boundary.scenarios.BoundaryScenario
-import org.araneforseti.boundary.util.DefaultMessage
 import org.araneforseti.boundary.util.MessageConfiguration
 import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
@@ -9,8 +8,8 @@ import org.joda.time.format.DateTimeFormat
 class DateField extends Field {
     String format
 
-    DateField(String name, String format, boolean required, String messageName=null, MessageConfiguration messageConfiguration=null) {
-        super(name, DateTime.now().toString(DateTimeFormat.forPattern(format)), required, messageName, messageConfiguration)
+    DateField(String name, String format, boolean required, MessageConfiguration messageConfiguration = new MessageConfiguration(name, "Datetime")) {
+        super(name, DateTime.now().toString(DateTimeFormat.forPattern(format)), required, messageConfiguration)
         this.format = format
     }
 
@@ -31,10 +30,5 @@ class DateField extends Field {
                 DateTime.now().toString(DateTimeFormat.forPattern("HH:mm:SS.sssZ - DD-MM-YYYY"))))
 
         return scenarios
-    }
-
-    @Override
-    String fieldType() {
-        return "Datetime"
     }
 }

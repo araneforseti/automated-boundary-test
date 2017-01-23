@@ -1,15 +1,15 @@
 package org.araneforseti.boundary.fields
 
+import org.araneforseti.boundary.util.DefaultMessage
+import org.araneforseti.boundary.util.MessageConfiguration
 import org.junit.Test
 
-import static org.araneforseti.boundary.TestUtil.scenario_messages_contains
-import static org.araneforseti.boundary.TestUtil.scenario_messages_contains
-import static org.araneforseti.boundary.TestUtil.scenarios_contains_value
+import static org.araneforseti.boundary.TestUtil.*
 
 class NumberFieldTest {
-    String messageName = "otherName"
-    NumberField requiredNumber = new NumberField("testField", true, messageName)
-    NumberField optionalNumber = new NumberField("testField", false, messageName)
+    private String fieldName = "testField"
+    NumberField requiredNumber = new NumberField(fieldName, true)
+    NumberField optionalNumber = new NumberField(fieldName, false)
 
     @Test
     public void number_field_cannot_be_string() {
@@ -24,8 +24,19 @@ class NumberFieldTest {
     }
 
     @Test
-    void boolean_message_uses_messageName() {
-        assert scenario_messages_contains(messageName, requiredNumber)
-        assert scenario_messages_contains(messageName, optionalNumber)
+    void number_message_uses_custom_messageConfiguration() {
+        MessageConfiguration messageConfiguration = new MessageConfiguration(messageName, fieldType)
+        NumberField optional = new NumberField("optionalField", false, messageConfiguration)
+        NumberField required = new NumberField("requiredField", true, messageConfiguration)
+        assert_messageConfiguration_is_used_for_scenarios(messageConfiguration, optional, required)
+    }
+
+    @Test
+    void number_message_uses_default_messageConfiguration() {
+        def defaultValidationMessage = DefaultMessage.defaultType(fieldName, "Number").build()
+        def defaultRequiredMessage = DefaultMessage.defaultRequired(fieldName).build()
+        assert scenario_messages_contains(defaultRequiredMessage, requiredNumber)
+        assert scenario_messages_contains(defaultValidationMessage, requiredNumber)
+        assert scenario_messages_contains(defaultValidationMessage, optionalNumber)
     }
 }

@@ -1,18 +1,15 @@
 package org.araneforseti.boundary.fields
 
 import org.araneforseti.boundary.util.DefaultMessage
+import org.araneforseti.boundary.util.MessageConfiguration
 import org.junit.Test
 
-import static org.araneforseti.boundary.TestUtil.scenario_messages_contains
-import static org.araneforseti.boundary.TestUtil.scenarios_contains_value
-import static org.araneforseti.boundary.TestUtil.scenarios_use_messageName_instead_of_name
+import static org.araneforseti.boundary.TestUtil.*
 
 class StringFieldTest {
-    String messageName = "otherName"
     String fieldName = "testField"
-    StringField requiredString = new StringField(fieldName, "asdf", true, messageName)
-    StringField optionalString = new StringField(fieldName, "asdf", false, messageName)
-    StringField defaultString = new StringField(fieldName, "asdf", true)
+    StringField requiredString = new StringField(fieldName, "asdf", true)
+    StringField optionalString = new StringField(fieldName, "asdf", false)
 
     @Test
     void required_strings_cannot_be_empty() {
@@ -34,25 +31,21 @@ class StringFieldTest {
         assert scenarios_contains_value(1, optionalString)
     }
 
-
     @Test
-    void message_uses_messageName() {
-        assert scenarios_use_messageName_instead_of_name(messageName, fieldName, requiredString)
-        assert scenarios_use_messageName_instead_of_name(messageName, fieldName, optionalString)
+    void field_uses_default_messageConfiguration() {
+        def defaultValidationMessage = DefaultMessage.defaultType(fieldName, "String").build()
+        def defaultRequiredMessage = DefaultMessage.defaultRequired(fieldName).build()
+        assert scenario_messages_contains(defaultRequiredMessage, requiredString)
+        assert scenario_messages_contains(defaultValidationMessage, requiredString)
+        assert scenario_messages_contains(defaultValidationMessage, optionalString)
     }
 
     @Test
-    void default_messageName_is_fieldName() {
-        assert scenario_messages_contains(fieldName, defaultString)
+    void field_uses_custom_messageConfiguration() {
+        MessageConfiguration messageConfiguration = new MessageConfiguration(messageName, fieldType)
+        StringField optional = new StringField("optionalString", "asdf", false, messageConfiguration)
+        StringField required = new StringField("requiredString", "fdsa", true, messageConfiguration)
+        assert_messageConfiguration_is_used_for_scenarios(messageConfiguration, optional, required)
     }
 
-    @Test
-    void default_requiredMessage_is_default() {
-        assert scenario_messages_contains(DefaultMessage.defaultRequired(fieldName).build(), defaultString)
-    }
-
-    @Test
-    void default_validationMessage_is_default() {
-        assert scenario_messages_contains(DefaultMessage.defaultType(fieldName, "String").build(), defaultString)
-    }
 }

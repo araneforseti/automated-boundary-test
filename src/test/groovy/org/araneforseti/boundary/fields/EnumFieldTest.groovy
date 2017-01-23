@@ -1,23 +1,19 @@
 package org.araneforseti.boundary.fields
 
+import org.araneforseti.boundary.util.DefaultMessage
+import org.araneforseti.boundary.util.MessageConfiguration
 import org.junit.Test
 
-import static org.araneforseti.boundary.TestUtil.scenario_messages_contains
-import static org.araneforseti.boundary.TestUtil.scenarios_contains_value
+import static org.araneforseti.boundary.TestUtil.*
 
 class EnumFieldTest {
-    String messageName = "otherName"
-    EnumField requiredField = new EnumField("requiredField", ["A", "B"], true, messageName)
-    EnumField optionalField = new EnumField("optionalField", ["A", "B"], true, messageName)
+    String fieldName = "enumField"
+    EnumField requiredField = new EnumField(fieldName, ["A", "B"], true)
+    EnumField optionalField = new EnumField(fieldName, ["A", "B"], false)
 
     private boolean test_both(value) {
         assert scenarios_contains_value(value, requiredField)
         assert scenarios_contains_value(value, optionalField)
-    }
-
-    private boolean test_both_messages(String messagePiece) {
-        assert scenario_messages_contains(messagePiece, requiredField)
-        assert scenario_messages_contains(messagePiece, optionalField)
     }
 
     @Test
@@ -36,7 +32,17 @@ class EnumFieldTest {
     }
 
     @Test
-    void field_uses_messageName() {
-        test_both_messages(messageName)
+    void field_uses_default_messageConfiguration() {
+        assert scenario_messages_contains(DefaultMessage.defaultRequired(fieldName).build(), requiredField)
+        assert scenario_messages_contains("$fieldName must be one of [A, B]", requiredField)
+        assert scenario_messages_contains("$fieldName must be one of [A, B]", optionalField)
+    }
+
+    @Test
+    void field_uses_custom_messageConfiguration() {
+        MessageConfiguration messageConfiguration = new MessageConfiguration(messageName, fieldType)
+        EnumField optional = new EnumField("optionalField", ['a', 'b'], false, messageConfiguration)
+        EnumField required = new EnumField("requiredField", ['a', 'b'], true, messageConfiguration)
+        assert_messageConfiguration_is_used_for_scenarios(messageConfiguration, optional, required)
     }
 }

@@ -6,8 +6,8 @@ import org.araneforseti.boundary.util.MessageConfiguration
 class ObjectField extends Field {
     List<Field> fieldList = []
 
-    ObjectField(String name, boolean required, String messageName=null, MessageConfiguration messageConfiguration=null) {
-        super(name, "N/A", required, messageName, messageConfiguration)
+    ObjectField(String name, boolean required, MessageConfiguration messageConfiguration = new MessageConfiguration(name, "Object")) {
+        super(name, "N/A", required, messageConfiguration)
     }
 
     ObjectField withField(Field newField) {
@@ -38,7 +38,7 @@ class ObjectField extends Field {
     BoundaryScenario missingFieldScenario(Field field) {
         Map value = getCorrectValue()
         value.remove(field.name)
-        return new BoundaryScenario("$messageName's field ${field.name} missing",
+        return new BoundaryScenario("${messageConfiguration.messageName}'s field ${field.name} missing",
                 "${field.name} is a required field",
                 value)
     }
@@ -59,10 +59,5 @@ class ObjectField extends Field {
             }
         }
         return myValue
-    }
-
-    @Override
-    String fieldType() {
-        return "object"
     }
 }
