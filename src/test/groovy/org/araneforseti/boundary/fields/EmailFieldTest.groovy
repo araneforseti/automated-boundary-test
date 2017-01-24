@@ -69,7 +69,7 @@ class EmailFieldTest {
         def messageType = "EmailFieldType"
         def messageConfiguration = new MessageConfiguration(messageName, messageType)
         EmailField emailField = new EmailField("Bool", true, messageConfiguration)
-        assert scenario_messages_contains("$messageName must be a $messageType", emailField)
+        assert scenario_messages_contains("$messageName must be $messageType", emailField)
     }
 
     @Test
@@ -78,6 +78,6 @@ class EmailFieldTest {
         def messageType = "EmailFieldType"
         def messageConfiguration = new MessageConfiguration(messageName, messageType)
         EmailField emailField = new EmailField("foo", false, messageConfiguration)
-        assert scenario_messages_contains("$messageName must be a $messageType", emailField)
+        assert scenario_messages_contains("$messageName must be $messageType", emailField)
     }
 }

@@ -27,14 +27,14 @@ class BooleanFieldTest {
     void required_boolean_field_defaults_validation_message() {
         String fieldName = "DefaultBoolean"
         BooleanField defaultBoolean = new BooleanField(fieldName, true)
-        assert scenario_messages_contains("$fieldName must be a boolean", defaultBoolean)
+        assert scenario_messages_contains("$fieldName must be boolean", defaultBoolean)
     }
 
     @Test
     void optional_boolean_field_defaults_validation_message() {
         String fieldName = "DefaultBoolean"
         BooleanField defaultBoolean = new BooleanField(fieldName, false)
-        assert scenario_messages_contains("$fieldName must be a boolean", defaultBoolean)
+        assert scenario_messages_contains("$fieldName must be boolean", defaultBoolean)
     }
 
     @Test
@@ -43,7 +43,7 @@ class BooleanFieldTest {
         def messageType = "BooleanFieldType"
         def messageConfiguration = new MessageConfiguration(messageName, messageType)
         BooleanField required = new BooleanField("Bool", true, messageConfiguration)
-        assert scenario_messages_contains("$messageName must be a $messageType", required)
+        assert scenario_messages_contains("$messageName must be $messageType", required)
     }
 
     @Test
@@ -52,6 +52,6 @@ class BooleanFieldTest {
         def messageType = "BooleanFieldType"
         def messageConfiguration = new MessageConfiguration(messageName, messageType)
         BooleanField required = new BooleanField("foo", false, messageConfiguration)
-        assert scenario_messages_contains("$messageName must be a $messageType", required)
+        assert scenario_messages_contains("$messageName must be $messageType", required)
     }
 }

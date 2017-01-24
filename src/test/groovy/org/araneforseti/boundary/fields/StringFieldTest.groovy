@@ -35,14 +35,14 @@ class StringFieldTest {
     void required_string_field_defaults_validation_message() {
         String fieldName = "DefaultString"
         StringField defaultString = new StringField(fieldName, "asdf", true)
-        assert scenario_messages_contains("$fieldName must be a String", defaultString)
+        assert scenario_messages_contains("$fieldName must be String", defaultString)
     }
 
     @Test
     void optional_string_field_defaults_validation_message() {
         String fieldName = "DefaultString"
         StringField defaultString = new StringField(fieldName, "asdf", false)
-        assert scenario_messages_contains("$fieldName must be a String", defaultString)
+        assert scenario_messages_contains("$fieldName must be String", defaultString)
     }
 
     @Test
@@ -51,7 +51,7 @@ class StringFieldTest {
         def messageType = "StringFieldType"
         def messageConfiguration = new MessageConfiguration(messageName, messageType)
         StringField requiredString = new StringField(fieldName, "asdf", true, messageConfiguration)
-        assert scenario_messages_contains("$messageName must be a $messageType", requiredString)
+        assert scenario_messages_contains("$messageName must be $messageType", requiredString)
     }
 
     @Test
@@ -60,6 +60,6 @@ class StringFieldTest {
         def messageType = "StringFieldType"
         def messageConfiguration = new MessageConfiguration(messageName, messageType)
         StringField optionalString = new StringField(fieldName, "asdf", false, messageConfiguration)
-        assert scenario_messages_contains("$messageName must be a $messageType", optionalString)
+        assert scenario_messages_contains("$messageName must be $messageType", optionalString)
     }
 }

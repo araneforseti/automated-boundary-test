@@ -27,14 +27,14 @@ class NumberFieldTest {
     void required_number_field_defaults_validation_message() {
         String fieldName = "DefaultNumber"
         NumberField defaultNumber = new NumberField(fieldName, true)
-        assert scenario_messages_contains("$fieldName must be a Number", defaultNumber)
+        assert scenario_messages_contains("$fieldName must be Number", defaultNumber)
     }
 
     @Test
     void optional_number_field_defaults_validation_message() {
         String fieldName = "DefaultNumber"
         NumberField defaultNumber = new NumberField(fieldName, false)
-        assert scenario_messages_contains("$fieldName must be a Number", defaultNumber)
+        assert scenario_messages_contains("$fieldName must be Number", defaultNumber)
     }
 
     @Test
@@ -43,7 +43,7 @@ class NumberFieldTest {
         def messageType = "NumberFieldType"
         def messageConfiguration = new MessageConfiguration(messageName, messageType)
         NumberField requiredNumber = new NumberField(fieldName, true, messageConfiguration)
-        assert scenario_messages_contains("$messageName must be a $messageType", requiredNumber)
+        assert scenario_messages_contains("$messageName must be $messageType", requiredNumber)
     }
 
     @Test
@@ -52,6 +52,6 @@ class NumberFieldTest {
         def messageType = "NumberFieldType"
         def messageConfiguration = new MessageConfiguration(messageName, messageType)
         NumberField optionalNumber = new NumberField(fieldName, false, messageConfiguration)
-        assert scenario_messages_contains("$messageName must be a $messageType", optionalNumber)
+        assert scenario_messages_contains("$messageName must be $messageType", optionalNumber)
     }
 }

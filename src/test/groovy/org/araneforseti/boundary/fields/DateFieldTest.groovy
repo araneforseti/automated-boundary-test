@@ -45,14 +45,14 @@ class DateFieldTest {
     void required_date_field_defaults_validation_message() {
         String fieldName = "DefaultDate"
         DateField defaultDate = new DateField(fieldName, "YYYY-MM-dd", true)
-        assert scenario_messages_contains("$fieldName must be a Datetime", defaultDate)
+        assert scenario_messages_contains("$fieldName must be Datetime", defaultDate)
     }
 
     @Test
     void optional_date_field_defaults_validation_message() {
         String fieldName = "DefaultDate"
         DateField defaultDate = new DateField(fieldName, "YYYY-MM-dd", false)
-        assert scenario_messages_contains("$fieldName must be a Datetime", defaultDate)
+        assert scenario_messages_contains("$fieldName must be Datetime", defaultDate)
     }
 
     @Test
@@ -61,7 +61,7 @@ class DateFieldTest {
         def messageType = "DateFieldType"
         def messageConfiguration = new MessageConfiguration(messageName, messageType)
         DateField required = new DateField(fieldName, "YYYY-MM-dd", true, messageConfiguration)
-        assert scenario_messages_contains("$messageName must be a $messageType", required)
+        assert scenario_messages_contains("$messageName must be $messageType", required)
     }
 
     @Test
@@ -70,7 +70,7 @@ class DateFieldTest {
         def messageType = "DateFieldType"
         def messageConfiguration = new MessageConfiguration(messageName, messageType)
         DateField required = new DateField(fieldName, "YYYY-MM-dd", false, messageConfiguration)
-        assert scenario_messages_contains("$messageName must be a $messageType", required)
+        assert scenario_messages_contains("$messageName must be $messageType", required)
     }
 
     boolean test_both(value) {

@@ -21,8 +21,8 @@ class RequestDefinitionTest extends Specification {
 
     void setup() {
         response1 = responseFor("invalid carId", 404)
-        response2 = responseFor("queryStringField must be a String", 400)
-        response3 = responseFor("bodyStringField must be a String", 400)
+        response2 = responseFor("queryStringField must be String", 400)
+        response3 = responseFor("bodyStringField must be String", 400)
         pathDefinition = new PathDefinition()
                 .withParameter(new Resource("cars"))
                 .withParameter(new Identifier("carId", "123")

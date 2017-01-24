@@ -51,7 +51,7 @@ class EnumFieldTest {
         def messageType = "EnumFieldType"
         def messageConfiguration = new MessageConfiguration(messageName, messageType)
         EnumField requiredEnum = new EnumField(fieldName, ["1", "2"], true, messageConfiguration)
-        assert scenario_messages_contains("$messageName must be a $messageType", requiredEnum)
+        assert scenario_messages_contains("$messageName must be $messageType", requiredEnum)
     }
 
     @Test
@@ -60,6 +60,6 @@ class EnumFieldTest {
         def messageType = "EnumFieldType"
         def messageConfiguration = new MessageConfiguration(messageName, messageType)
         EnumField optionalEnum = new EnumField(fieldName, ["1", "2"], false, messageConfiguration)
-        assert scenario_messages_contains("$messageName must be a $messageType", optionalEnum)
+        assert scenario_messages_contains("$messageName must be $messageType", optionalEnum)
     }
 }

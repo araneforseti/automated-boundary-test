@@ -7,7 +7,7 @@ class DefaultMessage {
     public static final FIELD_NAME_IDENTIFIER = "fieldMessageName"
     public static final FIELD_TYPE_IDENTIFIER = "fieldMessageType"
     public static final REQUIRED_MESSAGE = "fieldMessageName is a required field"
-    public static final VALIDATION_MESSAGE = "fieldMessageName must be a fieldMessageType"
+    public static final VALIDATION_MESSAGE = "fieldMessageName must be fieldMessageType"
 
     DefaultMessage(String fullString) {
         this.fullString = fullString
