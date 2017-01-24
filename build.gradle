@@ -1,5 +1,5 @@
 group 'org.araneforseti.boundary'
-version '1.1.0'
+version '1.2.0'
 
 apply plugin: 'groovy'
 apply plugin: 'java'
@@ -21,6 +21,6 @@ dependencies {
 jar {
     manifest {
         attributes 'Implementation-Title': 'Automated Boundary Testing',
-                'Implementation-Version': 1.1
+                'Implementation-Version': 1.2
     }
 }
